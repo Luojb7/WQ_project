@@ -13,7 +13,7 @@ Makefile文件是用于告诉make命令需要怎么样的去编译和链接程�
 关于Makefile的语法，可以参考 [http://wiki.ubuntu.org.cn/%E8%B7%9F%E6%88%91%E4%B8%80%E8%B5%B7%E5%86%99Makefile:MakeFile%E4%BB%8B%E7%BB%8D](http://wiki.ubuntu.org.cn/%E8%B7%9F%E6%88%91%E4%B8%80%E8%B5%B7%E5%86%99Makefile:MakeFile%E4%BB%8B%E7%BB%8D "跟我一起写makefile")
 
 ### 动态链接库&静态链接库
-* 在Linux下，动态链接库为.so文件；在Windows下，动态链接库为.dol文件。 静态链接库为.o文件。
+* 在Linux下，动态链接库为.so文件；在Windows下，动态链接库为.dll文件。 静态链接库为.o文件。
 * 动态链接库与静态链接库的一个比较重要的区别，就是在可执行文件运行时，若采用动态链接方式，则需要对程序中的某些函数进行重定向，而静态链接不用。
 * 由于采用动态链接方法时，程序的部分实现并不会被包含进可执行文件当中，因此可执行文件相比采用静态链接方法时要小，程序的灵活性与可更新性耶更强。
 
