@@ -1,4 +1,4 @@
-#include "package/ThostFtdcMdApi.h"
+#include "../package/ThostFtdcMdApi.h"
 
 class CMdSpi : public CThostFtdcMdSpi
 {
@@ -12,8 +12,6 @@ public:
 	virtual void OnHeartBeatWarning(int nTimeLapse);
 
 	virtual void OnRspUserLogin(CThostFtdcRspUserLoginField *pRspUserLogin, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) ;
-	
-	virtual void OnRspUserLogout(CThostFtdcUserLogoutField *pUserLogout, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast){};
 	
 	virtual void OnRspError(CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) ;
 	

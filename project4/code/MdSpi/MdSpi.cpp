@@ -1,8 +1,7 @@
 #include "MdSpi.h"
 #include <iostream>
-#include <stdlib.h>
+#include <fstream>
 #include <cstring>
-#include <stdio.h>
 
 using namespace std;
 
@@ -16,9 +15,10 @@ extern char* ppInstrumentID[];
 extern int iInstrumentID;
 
 extern int iRequestID;
+extern int dataNum;
 
 void CMdSpi::OnRspError(CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast){
-	cerr << "--->>> "<< "OnRspError" << endl;
+	cout << "--->>> "<< "OnRspError" << endl;
 	IsErrorRspInfo(pRspInfo);
 }
 
@@ -46,13 +46,9 @@ void CMdSpi::ReqUserLogin(){
 }
 
 void CMdSpi::OnRspUserLogin(CThostFtdcRspUserLoginField *pRspUserLogin, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {
-	cout<<"login"<<endl;
 	if(bIsLast && !IsErrorRspInfo(pRspInfo)){
-		cout << "date: " <<pRspUserLogin->TradingDay << endl;
-		cout << "time: " <<pRspUserLogin->LoginTime << endl;
-		cout << "BrokerID: " <<pRspUserLogin->BrokerID << endl;
-		cout << "UserID: " <<pRspUserLogin->UserID << endl;
-
+		cout << "====login succeed!====" << endl;
+		cout << "date: " << pRspUserLogin->TradingDay << endl;
 		SubscribeMarketData();
 	}
 }
@@ -64,8 +60,26 @@ void CMdSpi::SubscribeMarketData(){
 
 void CMdSpi::OnRspSubMarketData(CThostFtdcSpecificInstrumentField *pSpecificInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast){
 	if(!IsErrorRspInfo(pRspInfo)){
-		cout << "order market data succeed" << endl;
+		cout << "====order market data succeed====" << endl;
 		cout << "iInstrumentID: " << pSpecificInstrument->InstrumentID << endl;
+		char filePath[100] = {'\0'};
+		sprintf(filePath, "%s_market_data.csv", pSpecificInstrument->InstrumentID);
+		ofstream outFile;
+		outFile.open(filePath, ios::out);
+		outFile << "InstrumentID" << ","
+				<< "UpdateTime" << "," //gengxinshijian
+				<< "LastPrice" << "," //zuixinjia
+				<< "PreSettlementPrice" << "," //shangci jiesuanjia
+				<< "PreClosePrice" << ","  //zuo shoupan
+				<< "PreOpenInterest" << "," //zuo chicangliang
+				<< "OpenPrice" << "," //jin kaipan
+				<< "HighestPrice" << "," //zuigaojia
+				<< "LowestPrice" << "," //zuidijia
+				<< "Volume" << "," //shuliang
+				<< "Turnover" << "," //chengjiao jin'er
+				<< "OpenInterest" << "," //chicangliang
+				<< "ClosePrice" << "," //jin shoupan
+				<< "SettlementPrice" << endl; //benci jiesuanjia 
 	}
 }
 
@@ -74,16 +88,39 @@ void CMdSpi::OnRspUnSubMarketData(CThostFtdcSpecificInstrumentField *pSpecificIn
 }
 
 void CMdSpi::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketData){
-	cout << "depth market data" << endl;
+	dataNum++;
+	cout << dataNum << endl;
+	/*cout << "====depth market data====" << endl;
 	cout << "date: " << pDepthMarketData->TradingDay << endl;
-	cout << "ExchangeID: " << pDepthMarketData->ExchangeID << endl;
 	cout << "InstrumentID: " << pDepthMarketData->InstrumentID << endl;
 	cout << "LastPrice: " << pDepthMarketData->LastPrice << endl;
+	cout << "Volume: " << pDepthMarketData->Volume << endl;
+	cout << "OpenInterest: " << pDepthMarketData->OpenInterest << endl;
+	cout << "ClosePrice: " << pDepthMarketData->ClosePrice << endl;
+	cout << "UpdateTime: " << pDepthMarketData->UpdateTime << endl;*/
+	char filePath[100] = {'\0'};
+	sprintf(filePath, "%s_market_data.csv", pDepthMarketData->InstrumentID);
+	ofstream outFile;
+	outFile.open(filePath, ios::app);
+	outFile << pDepthMarketData->InstrumentID << ","
+			<< pDepthMarketData->UpdateTime << ","
+			<< pDepthMarketData->LastPrice << ","
+			<< pDepthMarketData->PreSettlementPrice << ","
+			<< pDepthMarketData->PreClosePrice << ","
+			<< pDepthMarketData->PreOpenInterest << ","
+			<< pDepthMarketData->OpenPrice << ","
+			<< pDepthMarketData->HighestPrice << ","
+			<< pDepthMarketData->LowestPrice << ","
+			<< pDepthMarketData->Volume << ","
+			<< pDepthMarketData->Turnover << ","
+			<< pDepthMarketData->OpenInterest << ","
+			<< pDepthMarketData->ClosePrice << ","
+			<< pDepthMarketData->SettlementPrice << endl;
 }
 
 bool CMdSpi::IsErrorRspInfo(CThostFtdcRspInfoField *pRspInfo){
 	bool bResult = ((pRspInfo) && (pRspInfo->ErrorID != 0));
 	if (bResult)
-		cerr << "--->>> ErrorID=" << pRspInfo->ErrorID << ", ErrorMsg=" << pRspInfo->ErrorMsg << endl;
+		cout << "--->>> ErrorID=" << pRspInfo->ErrorID << ", ErrorMsg=" << pRspInfo->ErrorMsg << endl;
 	return bResult;
 }

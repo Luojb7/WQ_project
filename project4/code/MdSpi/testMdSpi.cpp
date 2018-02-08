@@ -1,5 +1,5 @@
 #include <iostream>
-#include "package/ThostFtdcMdApi.h"
+#include "../package/ThostFtdcMdApi.h"
 #include "MdSpi.h"
 
 using namespace std;
@@ -14,6 +14,7 @@ char *ppInstrumentID[] = {"al1803"};
 int iInstrumentID = 1;								
 
 int iRequestID = 0;
+int dataNum = 0;
 
 int main()
 {
