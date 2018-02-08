@@ -1,4 +1,4 @@
-objects = testMdSpi.o ./thostmduserapi.so ./thosttraderapi.so MdSpi.o
+objects = testMdSpi.o ./thostmduserapi.so
 
 Demo : ${objects}
 	g++ -o Demo ${objects}
