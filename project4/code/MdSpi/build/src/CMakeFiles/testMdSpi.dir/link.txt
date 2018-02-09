@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/testMdSpi.dir/testMdSpi.cpp.o  -o ../../bin/testMdSpi  -L/home/luojunbin/project/WQ_project/project4/code/MdSpi/lib -lthostmduserapi -lthosttraderapi ../../lib/libMdSpi.a -Wl,-rpath,/home/luojunbin/project/WQ_project/project4/code/MdSpi/lib 

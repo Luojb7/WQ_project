@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../../lib/libMdSpi.a  CMakeFiles/MdSpi.dir/MdSpi.cpp.o
+/usr/bin/ranlib ../../lib/libMdSpi.a
