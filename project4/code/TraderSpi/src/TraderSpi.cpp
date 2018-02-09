@@ -1,7 +1,11 @@
 #include "TraderSpi.h"
-#include "../package/ThostFtdcTraderApi.h"
+#include "ThostFtdcTraderApi.h"
 #include <iostream>
 #include <cstring>
+#include <unistd.h>
+#include <stdlib.h>
+
+using namespace std;
 
 extern CThostFtdcTraderApi* pUserApi;
 
@@ -43,7 +47,6 @@ void CTraderSpi::ReqUserLogin(){
 	strcpy(req.UserID, INVESTOR_ID);
 	strcpy(req.Password, PASSWORD);
 	int iResult = pUserApi->ReqUserLogin(&req, ++iRequestID);
-	cout << "try login " << ((iResult == ?)"succeed":"default") <<endl;
 }
 
 // responce for login
@@ -58,9 +61,15 @@ void CTraderSpi::OnRspUserLogin(CThostFtdcRspUserLoginField *pRspUserLogin, CTho
 		sprintf(FORQUOTE_REF, "%d", 1);
 		sprintf(QUOTE_REF, "%d", 1);
 
-		cout << "date: " << pRspUserLogin->TradingDay << endl;
+		cout << "====Login succeed====" << endl;
+		cout << "Date: " << pRspUserLogin->TradingDay << endl;
+		cout << "LoginTime: " << pRspUserLogin->LoginTime << endl;
+		cout << "user: " << pRspUserLogin->UserID << endl;
 
 		ReqSettlementInfoConfirm();
+	}
+	else{
+		cout << "====Login default====" << endl;
 	}
 }
 
@@ -71,13 +80,16 @@ void CTraderSpi::ReqSettlementInfoConfirm(){
 	strcpy(req.BrokerID, BROKER_ID);
 	strcpy(req.InvestorID, INVESTOR_ID);
 	int iResult = pUserApi->ReqSettlementInfoConfirm(&req, ++iRequestID);
-	cout << "SettlementInfoConfirm: " << ((iResult == 0) ? "succeed" : "default") << endl;
 }
 
 // reponce for confirming Settlement
 void CTraderSpi::OnRspSettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField *pSettlementInfoConfirm, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast){
 	if (bIsLast && !IsErrorRspInfo(pRspInfo)){
+		cout << "====Settlement Information Confirm succeed====" << endl;
 		ReqQryInstrument();
+	}
+	else{
+		cout << "====Settlement Information Confirm default====" << endl;
 	}
 }
 
@@ -88,13 +100,14 @@ void CTraderSpi::ReqQryInstrument(){
 	strcpy(req.InstrumentID, INSTRUMENT_ID);
 	while (true){
 		int iResult = pUserApi->ReqQryInstrument(&req, ++iRequestID);
+		cout << "ReqQryInstrument iResult: " << iResult << endl;
 		if (!IsFlowControl(iResult)){
-			cout << "querying instrument "  << ((iResult == 0) ? "succeed" : "default") << endl;
+			//cout << "querying instrument "  << ((iResult == 0) ? "succeed" : "default") << endl;
 			break;
 		}
 		else{
 			cout << "querying instrument " << iResult << "is flow_controled" << endl;
-			Sleep(1000);
+			usleep(1000);
 		}
 	} // while
 }
@@ -102,7 +115,17 @@ void CTraderSpi::ReqQryInstrument(){
 // reponce for querying instrument
 void CTraderSpi::OnRspQryInstrument(CThostFtdcInstrumentField *pInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast){
 	if (bIsLast && !IsErrorRspInfo(pRspInfo)){
+		cout << "====querying instrument succeed====" << endl;
+		cout << "InstrumentID: " << pInstrument->InstrumentID << endl;
+		cout << "DeliveryYear: " << pInstrument->DeliveryYear << endl;
+		cout << "DeliveryMonth: " << pInstrument->DeliveryMonth << endl;
+		cout << "IsTrading: " << pInstrument->IsTrading << endl;
+		cout << "PriceTick: " << pInstrument->PriceTick << endl;
+
 		ReqQryTradingAccount();
+	}
+	else{
+		cout << "====querying instrument default====" << endl;
 	}
 }
 
@@ -114,13 +137,14 @@ void CTraderSpi::ReqQryTradingAccount(){
 	strcpy(req.InvestorID, INVESTOR_ID);
 	while (true){
 		int iResult = pUserApi->ReqQryTradingAccount(&req, ++iRequestID);
+		cout << "ReqQryTradingAccount iResult: " << iResult << endl;
 		if (!IsFlowControl(iResult)){
 			cout << "querying account " << ((iResult == 0) ? "succeed" : "default") << endl;
 			break;
 		}
 		else{
 			cout << "querying account "  << iResult << "is flow_controled" << endl;
-			Sleep(1000);
+			usleep(1000);
 		}
 	} // while
 }
@@ -141,12 +165,13 @@ void CTraderSpi::ReqQryInvestorPosition(){
 	strcpy(req.InstrumentID, INSTRUMENT_ID);
 	while (true){
 		int iResult = pUserApi->ReqQryInvestorPosition(&req, ++iRequestID);
+		cout << "ReqQryInvestorPosition iResult: " << iResult << endl;
 		if (!IsFlowControl(iResult)){
 			cout << "querying investor position "  <<((iResult == 0) ? "succeed" : "default") << endl;
 			break;}
 		else{
 			cout << "querying investor position "  << iResult << "is flow_controled" << endl;
-			Sleep(1000);
+			usleep(1000);
 		}
 	} // while
 }
@@ -154,13 +179,13 @@ void CTraderSpi::ReqQryInvestorPosition(){
 // reponce for querying investor position
 void CTraderSpi::OnRspQryInvestorPosition(CThostFtdcInvestorPositionField *pInvestorPosition, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast){
 	if (bIsLast && !IsErrorRspInfo(pRspInfo)){
-		ReqOrderInsert(); 
+		//ReqOrderInsert(); 
 
-		ReqExecOrderInsert();
+		//ReqExecOrderInsert();
 
-		ReqForQuoteInsert();
+		//ReqForQuoteInsert();
 
-		ReqQuoteInsert();
+		//ReqQuoteInsert();
 	}
 }
 
@@ -324,19 +349,19 @@ void CTraderSpi::OnRspOrderInsert(CThostFtdcInputOrderField *pInputOrder, CThost
 
 void CTraderSpi::OnRspExecOrderInsert(CThostFtdcInputExecOrderField *pInputExecOrder, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
-	cerr << "====request for inserting execorder default====" << endl;
+	cout << "====request for inserting execorder default====" << endl;
 	IsErrorRspInfo(pRspInfo);
 }
 
 void CTraderSpi::OnRspForQuoteInsert(CThostFtdcInputForQuoteField *pInputForQuote, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
-	cerr << "====request for inserting forquote default====" << endl;
+	cout << "====request for inserting forquote default====" << endl;
 	IsErrorRspInfo(pRspInfo);
 }
 
 void CTraderSpi::OnRspQuoteInsert(CThostFtdcInputQuoteField *pInputQuote, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
-	cerr << "====request for inserting quote default====" << endl;
+	cout << "====request for inserting quote default====" << endl;
 	IsErrorRspInfo(pRspInfo);
 }
 
@@ -418,7 +443,7 @@ void CTraderSpi::ReqExecOrderAction(CThostFtdcExecOrderField *pExecOrder)
 	strcpy(req.InstrumentID,pExecOrder->InstrumentID);
 
 	int iResult = pUserApi->ReqExecOrderAction(&req, ++iRequestID);
-	cerr << "--->>> Ö´ÐÐÐû¸æ²Ù×÷ÇëÇó: "  << iResult << ((iResult == 0) ? ", ³É¹¦" : ", Ê§°Ü") << endl;
+	cout << "execorder action " << ((iResult == 0) ? "succeed" : "default") << endl;
 	EXECORDER_ACTION_SENT = true;
 }
 
@@ -456,89 +481,89 @@ void CTraderSpi::ReqQuoteAction(CThostFtdcQuoteField *pQuote)
 	strcpy(req.InstrumentID,pQuote->InstrumentID);
 
 	int iResult = pUserApi->ReqQuoteAction(&req, ++iRequestID);
-	cerr << "--->>> ±¨¼Û²Ù×÷ÇëÇó: "  << iResult << ((iResult == 0) ? ", ³É¹¦" : ", Ê§°Ü") << endl;
+	cout << "quote action " << ((iResult == 0) ? "succeed" : "default") << endl;
 	QUOTE_ACTION_SENT = true;
 }
 
 void CTraderSpi::OnRspOrderAction(CThostFtdcInputOrderActionField *pInputOrderAction, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
-	cerr << "--->>> " << "OnRspOrderAction" << endl;
+	cout << "--->>> " << "OnRspOrderAction" << endl;
 	IsErrorRspInfo(pRspInfo);
 }
 
 void CTraderSpi::OnRspExecOrderAction(CThostFtdcInputExecOrderActionField *pInpuExectOrderAction, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
-	cerr << "--->>> " << "OnRspExecOrderAction" << endl;
+	cout << "--->>> " << "OnRspExecOrderAction" << endl;
 	IsErrorRspInfo(pRspInfo);
 }
 
 void CTraderSpi::OnRspQuoteAction(CThostFtdcInputQuoteActionField *pInpuQuoteAction, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
-	cerr << "--->>> " << "OnRspQuoteAction" << endl;
+	cout << "--->>> " << "OnRspQuoteAction" << endl;
 	IsErrorRspInfo(pRspInfo);
 }
 
 void CTraderSpi::OnRtnOrder(CThostFtdcOrderField *pOrder)
 {
-	cerr << "--->>> " << "OnRtnOrder"  << endl;
+	cout << "--->>> " << "OnRtnOrder"  << endl;
 	if (IsMyOrder(pOrder))
 	{
 		if (IsTradingOrder(pOrder))
 			ReqOrderAction(pOrder);
 		else if (pOrder->OrderStatus == THOST_FTDC_OST_Canceled)
-			cout << "--->>> ³·µ¥³É¹¦" << endl;
+			cout << "papapa" << endl;
 	}
 }
 
 void CTraderSpi::OnRtnExecOrder(CThostFtdcExecOrderField *pExecOrder)
 {
-	cerr << "--->>> " << "OnRtnExecOrder"  << endl;
+	cout << "--->>> " << "OnRtnExecOrder"  << endl;
 	if (IsMyExecOrder(pExecOrder))
 	{
 		if (IsTradingExecOrder(pExecOrder))
 			ReqExecOrderAction(pExecOrder);
 		else if (pExecOrder->ExecResult == THOST_FTDC_OER_Canceled)
-			cout << "--->>> Ö´ÐÐÐû¸æ³·µ¥³É¹¦" << endl;
+			cout << "papapa" << endl;
 	}
 }
 
 void CTraderSpi::OnRtnForQuoteRsp(CThostFtdcForQuoteRspField *pForQuoteRsp)
 {
-	cerr << "--->>> " << "OnRtnForQuoteRsp"  << endl;
+	cout << "--->>> " << "OnRtnForQuoteRsp"  << endl;
 }
 
 void CTraderSpi::OnRtnQuote(CThostFtdcQuoteField *pQuote)
 {
-	cerr << "--->>> " << "OnRtnQuote"  << endl;
+	cout << "--->>> " << "OnRtnQuote"  << endl;
 	if (IsMyQuote(pQuote))
 	{
 		if (IsTradingQuote(pQuote))
 			ReqQuoteAction(pQuote);
 		else if (pQuote->QuoteStatus == THOST_FTDC_OST_Canceled)
-			cout << "--->>> ±¨¼Û³·µ¥³É¹¦" << endl;
+			cout << "papapa" << endl;
 	}
 }
 
 void CTraderSpi::OnRtnTrade(CThostFtdcTradeField *pTrade)
 {
-	cerr << "--->>> " << "OnRtnTrade"  << endl;
+	cout << "--->>> " << "OnRtnTrade"  << endl;
 }
 
 void CTraderSpi:: OnFrontDisconnected(int nReason)
 {
-	cerr << "--->>> " << "OnFrontDisconnected" << endl;
-	cerr << "--->>> Reason = " << nReason << endl;
+	cout << "--->>> " << "OnFrontDisconnected" << endl;
+	cout << "--->>> Reason = " << nReason << endl;
 }
 		
 void CTraderSpi::OnHeartBeatWarning(int nTimeLapse)
 {
-	cerr << "--->>> " << "OnHeartBeatWarning" << endl;
-	cerr << "--->>> nTimerLapse = " << nTimeLapse << endl;
+	cout << "--->>> " << "OnHeartBeatWarning" << endl;
+	cout << "--->>> nTimerLapse = " << nTimeLapse << endl;
 }
 
 void CTraderSpi::OnRspError(CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
-	cerr << "--->>> " << "OnRspError" << endl;
+	cout << "--->>> " << "OnRspError" << endl;
 	IsErrorRspInfo(pRspInfo);
 }
 
@@ -546,7 +571,7 @@ bool CTraderSpi::IsErrorRspInfo(CThostFtdcRspInfoField *pRspInfo)
 {
 	bool bResult = ((pRspInfo) && (pRspInfo->ErrorID != 0));
 	if (bResult)
-		cerr << "--->>> ErrorID=" << pRspInfo->ErrorID << ", ErrorMsg=" << pRspInfo->ErrorMsg << endl;
+		cout << "--->>> ErrorID=" << pRspInfo->ErrorID << ", ErrorMsg=" << pRspInfo->ErrorMsg << endl;
 	return bResult;
 }
 

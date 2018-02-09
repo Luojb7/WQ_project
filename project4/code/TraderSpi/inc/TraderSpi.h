@@ -1,4 +1,5 @@
-#include "../package/ThostFtdcTraderApi.h"
+#include "ThostFtdcTraderApi.h"
+#include <stdio.h>
 
 class CTraderSpi : public CThostFtdcTraderSpi
 {
@@ -85,4 +86,4 @@ private:
 	bool IsTradingExecOrder(CThostFtdcExecOrderField *pExecOrder);
 	
 	bool IsTradingQuote(CThostFtdcQuoteField *pQuote);
-}
+};

@@ -1,9 +1,8 @@
-#include "../package/ThostFtdcTraderApi.h"
+#include "ThostFtdcTraderApi.h"
 #include "TraderSpi.h"
 
 CThostFtdcTraderApi* pUserApi;
 
-// ÅäÖÃ²ÎÊý
 char  FRONT_ADDR[] = "tcp://180.168.146.187:10001";		
 TThostFtdcBrokerIDType	BROKER_ID = "9999";				
 TThostFtdcInvestorIDType INVESTOR_ID = "112585";			
@@ -14,7 +13,7 @@ TThostFtdcPriceType	LIMIT_PRICE = 2818;
 
 int iRequestID = 0;
 
-void main(void)
+int main(void)
 {
 	
 	pUserApi = CThostFtdcTraderApi::CreateFtdcTraderApi();			
@@ -27,4 +26,5 @@ void main(void)
 
 	pUserApi->Join();
 //	pUserApi->Release();
+	return 0;
 }
