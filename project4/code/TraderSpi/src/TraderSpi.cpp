@@ -393,29 +393,28 @@ void CTraderSpi::ReqExecOrderAction(CThostFtdcExecOrderField *pExecOrder)
 	CThostFtdcInputExecOrderActionField req;
 	memset(&req, 0, sizeof(req));
 
-	///¾­¼Í¹«Ë¾´úÂë
 	strcpy(req.BrokerID,pExecOrder->BrokerID);
-	///Í¶×ÊÕß´úÂë
+
 	strcpy(req.InvestorID,pExecOrder->InvestorID);
-	///Ö´ÐÐÐû¸æ²Ù×÷ÒýÓÃ
+
 	//TThostFtdcOrderActionRefType	ExecOrderActionRef;
-	///Ö´ÐÐÐû¸æÒýÓÃ
+
 	strcpy(req.ExecOrderRef,pExecOrder->ExecOrderRef);
-	///ÇëÇó±àºÅ
+
 	//TThostFtdcRequestIDType	RequestID;
-	///Ç°ÖÃ±àºÅ
+
 	req.FrontID=FRONT_ID;
-	///»á»°±àºÅ
+
 	req.SessionID=SESSION_ID;
-	///½»Ò×Ëù´úÂë
+
 	//TThostFtdcExchangeIDType	ExchangeID;
-	///Ö´ÐÐÐû¸æ²Ù×÷±àºÅ
+
 	//TThostFtdcExecOrderSysIDType	ExecOrderSysID;
-	///²Ù×÷±êÖ¾
+
 	req.ActionFlag=THOST_FTDC_AF_Delete;
-	///ÓÃ»§´úÂë
+
 	//TThostFtdcUserIDType	UserID;
-	///ºÏÔ¼´úÂë
+
 	strcpy(req.InstrumentID,pExecOrder->InstrumentID);
 
 	int iResult = pUserApi->ReqExecOrderAction(&req, ++iRequestID);
@@ -431,29 +430,29 @@ void CTraderSpi::ReqQuoteAction(CThostFtdcQuoteField *pQuote)
 
 	CThostFtdcInputQuoteActionField req;
 	memset(&req, 0, sizeof(req));
-	///¾­¼Í¹«Ë¾´úÂë
+
 	strcpy(req.BrokerID, pQuote->BrokerID);
-	///Í¶×ÊÕß´úÂë
+
 	strcpy(req.InvestorID, pQuote->InvestorID);
-	///±¨¼Û²Ù×÷ÒýÓÃ
+
 	//TThostFtdcOrderActionRefType	QuoteActionRef;
-	///±¨¼ÛÒýÓÃ
+
 	strcpy(req.QuoteRef,pQuote->QuoteRef);
-	///ÇëÇó±àºÅ
+
 	//TThostFtdcRequestIDType	RequestID;
-	///Ç°ÖÃ±àºÅ
+
 	req.FrontID=FRONT_ID;
-	///»á»°±àºÅ
+
 	req.SessionID=SESSION_ID;
-	///½»Ò×Ëù´úÂë
+
 	//TThostFtdcExchangeIDType	ExchangeID;
-	///±¨¼Û²Ù×÷±àºÅ
+
 	//TThostFtdcOrderSysIDType	QuoteSysID;
-	///²Ù×÷±êÖ¾
+
 	req.ActionFlag=THOST_FTDC_AF_Delete;
-	///ÓÃ»§´úÂë
+
 	//TThostFtdcUserIDType	UserID;
-	///ºÏÔ¼´úÂë
+
 	strcpy(req.InstrumentID,pQuote->InstrumentID);
 
 	int iResult = pUserApi->ReqQuoteAction(&req, ++iRequestID);
@@ -469,19 +468,16 @@ void CTraderSpi::OnRspOrderAction(CThostFtdcInputOrderActionField *pInputOrderAc
 
 void CTraderSpi::OnRspExecOrderAction(CThostFtdcInputExecOrderActionField *pInpuExectOrderAction, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
-	//ÕýÈ·µÄ³·µ¥²Ù×÷£¬²»»á½øÈë¸Ã»Øµ÷
 	cerr << "--->>> " << "OnRspExecOrderAction" << endl;
 	IsErrorRspInfo(pRspInfo);
 }
 
 void CTraderSpi::OnRspQuoteAction(CThostFtdcInputQuoteActionField *pInpuQuoteAction, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
-	//ÕýÈ·µÄ³·µ¥²Ù×÷£¬²»»á½øÈë¸Ã»Øµ÷
 	cerr << "--->>> " << "OnRspQuoteAction" << endl;
 	IsErrorRspInfo(pRspInfo);
 }
 
-///±¨µ¥Í¨Öª
 void CTraderSpi::OnRtnOrder(CThostFtdcOrderField *pOrder)
 {
 	cerr << "--->>> " << "OnRtnOrder"  << endl;
@@ -494,7 +490,6 @@ void CTraderSpi::OnRtnOrder(CThostFtdcOrderField *pOrder)
 	}
 }
 
-//Ö´ÐÐÐû¸æÍ¨Öª
 void CTraderSpi::OnRtnExecOrder(CThostFtdcExecOrderField *pExecOrder)
 {
 	cerr << "--->>> " << "OnRtnExecOrder"  << endl;
@@ -507,14 +502,11 @@ void CTraderSpi::OnRtnExecOrder(CThostFtdcExecOrderField *pExecOrder)
 	}
 }
 
-//Ñ¯¼ÛÍ¨Öª
 void CTraderSpi::OnRtnForQuoteRsp(CThostFtdcForQuoteRspField *pForQuoteRsp)
 {
-	//ÉÏÆÚËùÖÐ½ðËùÑ¯¼ÛÍ¨ÖªÍ¨¹ý¸Ã½Ó¿Ú·µ»Ø£»Ö»ÓÐ×öÊÐÉÌ¿Í»§¿ÉÒÔÊÕµ½¸ÃÍ¨Öª
 	cerr << "--->>> " << "OnRtnForQuoteRsp"  << endl;
 }
 
-//±¨¼ÛÍ¨Öª
 void CTraderSpi::OnRtnQuote(CThostFtdcQuoteField *pQuote)
 {
 	cerr << "--->>> " << "OnRtnQuote"  << endl;
@@ -527,7 +519,6 @@ void CTraderSpi::OnRtnQuote(CThostFtdcQuoteField *pQuote)
 	}
 }
 
-///³É½»Í¨Öª
 void CTraderSpi::OnRtnTrade(CThostFtdcTradeField *pTrade)
 {
 	cerr << "--->>> " << "OnRtnTrade"  << endl;
@@ -553,7 +544,6 @@ void CTraderSpi::OnRspError(CThostFtdcRspInfoField *pRspInfo, int nRequestID, bo
 
 bool CTraderSpi::IsErrorRspInfo(CThostFtdcRspInfoField *pRspInfo)
 {
-	// Èç¹ûErrorID != 0, ËµÃ÷ÊÕµ½ÁË´íÎóµÄÏìÓ¦
 	bool bResult = ((pRspInfo) && (pRspInfo->ErrorID != 0));
 	if (bResult)
 		cerr << "--->>> ErrorID=" << pRspInfo->ErrorID << ", ErrorMsg=" << pRspInfo->ErrorMsg << endl;
