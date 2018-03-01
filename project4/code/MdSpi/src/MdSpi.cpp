@@ -17,51 +17,81 @@ extern int iInstrumentID;
 extern int iRequestID;
 extern int dataNum;
 
-void CMdSpi::OnRspError(CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast){
-	cout << "--->>> "<< "OnRspError" << endl;
+bool CMdSpi::IsErrorRspInfo(CThostFtdcRspInfoField *pRspInfo)
+{
+	bool bResult = ((pRspInfo) && (pRspInfo->ErrorID != 0));
+	if (bResult)
+		cout << "--->>> ErrorID=" << pRspInfo->ErrorID << ", ErrorMsg=" << pRspInfo->ErrorMsg << endl;
+	return bResult;
+}
+
+void CMdSpi::OnRspError(CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
+{
 	IsErrorRspInfo(pRspInfo);
 }
 
-void CMdSpi::OnFrontConnected(){
-	cout << "====connect succeed====" << endl;
+void CMdSpi::OnFrontConnected()
+{
+	cout << "--->>> connect succeed" << endl;
 	ReqUserLogin();
 }
 
-void CMdSpi::OnFrontDisconnected(int nReason){
-	cout << "connect default for " << nReason<<endl;
-}
-
-void CMdSpi::OnHeartBeatWarning(int nTimeLapse){
-	cout << "nTimeLapse: " << nTimeLapse << endl;
-}
-
-void CMdSpi::ReqUserLogin(){
+void CMdSpi::ReqUserLogin()
+{
 	CThostFtdcReqUserLoginField req;
 	memset(&req, 0, sizeof(req));
 	strcpy(req.BrokerID, BROKER_ID);
 	strcpy(req.UserID, INVESTOR_ID);
 	strcpy(req.Password, PASSWORD);
 	int iResult = pUserApi->ReqUserLogin(&req, ++iRequestID);
-	cout << "try login " << ((iResult == 0) ? "succeed" : "default") << endl;
 }
 
-void CMdSpi::OnRspUserLogin(CThostFtdcRspUserLoginField *pRspUserLogin, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {
-	if(bIsLast && !IsErrorRspInfo(pRspInfo)){
-		cout << "====login succeed!====" << endl;
-		cout << "date: " << pRspUserLogin->TradingDay << endl;
+void CMdSpi::OnFrontDisconnected(int nReason)
+{
+	cout << "--->>> connect error for " << nReason << endl;
+}
+
+void CMdSpi::OnHeartBeatWarning(int nTimeLapse)
+{
+	cout << "--->>> nTimeLapse: " << nTimeLapse << endl;
+}
+
+void CMdSpi::OnRspUserLogin(CThostFtdcRspUserLoginField *pRspUserLogin, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) 
+{
+	if(bIsLast && !IsErrorRspInfo(pRspInfo))
+	{
+		cout << "--->>> login succeed!" << endl;
+		cout << "Login date: " << pRspUserLogin->TradingDay << endl;
+		cout << "Login time: " << pRspUserLogin->LoginTime << endl;
+		cout << "userID: " << pRspUserLogin->UserID << endl;
 		SubscribeMarketData();
+		//SubscribeForQuoteRsp();
+	}
+	else
+	{
+		cout << "--->>> ErrorID: " << pRspInfo->ErrorID << endl;
+		cout << "--->>> ErrorMsg: " << pRspInfo->ErrorMsg << endl;
 	}
 }
 
-void CMdSpi::SubscribeMarketData(){
+void CMdSpi::SubscribeMarketData()
+{
 	int iResult = pUserApi->SubscribeMarketData(ppInstrumentID, iInstrumentID);
-	cout << "iResult: " << iResult << endl;
+	//cout << "--->>> Subscribe market data: " << ((iResult == 0) ? "succeed" : "default") << endl;
 }
 
-void CMdSpi::OnRspSubMarketData(CThostFtdcSpecificInstrumentField *pSpecificInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast){
-	if(!IsErrorRspInfo(pRspInfo)){
-		cout << "====order market data succeed====" << endl;
-		cout << "iInstrumentID: " << pSpecificInstrument->InstrumentID << endl;
+void CMdSpi::SubscribeForQuoteRsp()
+{
+	int iResult = pUserApi->SubscribeForQuoteRsp(ppInstrumentID, iInstrumentID);
+	//cout << "--->>> Subscribe for quote response: " << ((iResult == 0) ? "succeed" : "default") << endl;
+}
+
+void CMdSpi::OnRspSubMarketData(CThostFtdcSpecificInstrumentField *pSpecificInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
+{
+	if(!IsErrorRspInfo(pRspInfo))
+	{
+		cout << "--->>> Subscribe market data succeed" << endl;
+		cout << "InstrumentID: " << pSpecificInstrument->InstrumentID << endl;
 		char filePath[100] = {'\0'};
 		sprintf(filePath, "%s_market_data.csv", pSpecificInstrument->InstrumentID);
 		ofstream outFile;
@@ -81,23 +111,65 @@ void CMdSpi::OnRspSubMarketData(CThostFtdcSpecificInstrumentField *pSpecificInst
 				<< "ClosePrice" << "," //jin shoupan
 				<< "SettlementPrice" << endl; //benci jiesuanjia 
 	}
+	else
+	{
+		cout << "--->>> ErrorID: " << pRspInfo->ErrorID << endl;
+		cout << "--->>> ErrorMsg: " << pRspInfo->ErrorMsg << endl;
+	}
 }
 
-void CMdSpi::OnRspUnSubMarketData(CThostFtdcSpecificInstrumentField *pSpecificInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast){
-	cout << "balabala" << endl;
+void CMdSpi::OnRspUnSubMarketData(CThostFtdcSpecificInstrumentField *pSpecificInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
+{
+	if(!IsErrorRspInfo(pRspInfo))
+	{
+		cout << "--->>> Unsubscribe market data succeed" << endl;
+		cout << "InstrumentID: " << pSpecificInstrument->InstrumentID << endl;
+	}
+	else
+	{
+		cout << "--->>> ErrorID: " << pRspInfo->ErrorID << endl;
+		cout << "--->>> ErrorMsg: " << pRspInfo->ErrorMsg << endl;
+	}
 }
 
-void CMdSpi::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketData){
-	dataNum++;
-	cout << dataNum << endl;
-	/*cout << "====depth market data====" << endl;
+void CMdSpi::OnRspSubForQuoteRsp(CThostFtdcSpecificInstrumentField *pSpecificInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
+{
+	if(!IsErrorRspInfo(pRspInfo))
+	{
+		cout << "--->>> Subscribe for quote response succeed" << endl;
+		cout << "InstrumentID: " << pSpecificInstrument->InstrumentID << endl;
+	}
+	else
+	{
+		cout << "--->>> ErrorID: " << pRspInfo->ErrorID << endl;
+		cout << "--->>> ErrorMsg: " << pRspInfo->ErrorMsg << endl;
+	}
+}
+
+void CMdSpi::OnRspUnSubForQuoteRsp(CThostFtdcSpecificInstrumentField *pSpecificInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
+{
+	if(!IsErrorRspInfo(pRspInfo))
+	{
+		cout << "--->>> Unsubscribe for quote response succeed" << endl;
+		cout << "InstrumentID: " << pSpecificInstrument->InstrumentID << endl;
+	}
+	else
+	{
+		cout << "--->>> ErrorID: " << pRspInfo->ErrorID << endl;
+		cout << "--->>> ErrorMsg: " << pRspInfo->ErrorMsg << endl;
+	}
+}
+
+void CMdSpi::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketData)
+{
+	cout << "--->>> Depth market data:" << endl;
 	cout << "date: " << pDepthMarketData->TradingDay << endl;
 	cout << "InstrumentID: " << pDepthMarketData->InstrumentID << endl;
 	cout << "LastPrice: " << pDepthMarketData->LastPrice << endl;
 	cout << "Volume: " << pDepthMarketData->Volume << endl;
 	cout << "OpenInterest: " << pDepthMarketData->OpenInterest << endl;
 	cout << "ClosePrice: " << pDepthMarketData->ClosePrice << endl;
-	cout << "UpdateTime: " << pDepthMarketData->UpdateTime << endl;*/
+	cout << "UpdateTime: " << pDepthMarketData->UpdateTime << endl;
 	char filePath[100] = {'\0'};
 	sprintf(filePath, "%s_market_data.csv", pDepthMarketData->InstrumentID);
 	ofstream outFile;
@@ -118,9 +190,9 @@ void CMdSpi::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketDa
 			<< pDepthMarketData->SettlementPrice << endl;
 }
 
-bool CMdSpi::IsErrorRspInfo(CThostFtdcRspInfoField *pRspInfo){
-	bool bResult = ((pRspInfo) && (pRspInfo->ErrorID != 0));
-	if (bResult)
-		cout << "--->>> ErrorID=" << pRspInfo->ErrorID << ", ErrorMsg=" << pRspInfo->ErrorMsg << endl;
-	return bResult;
+void CMdSpi::OnRtnForQuoteRsp(CThostFtdcForQuoteRspField *pForQuoteRsp)
+{
+	cout << "--->>> Quote response: " << endl;
+	cout << "Date: " << pForQuoteRsp->TradingDay << endl;
+	cout << "InstrumentID: " << pForQuoteRsp->InstrumentID << endl;
 }

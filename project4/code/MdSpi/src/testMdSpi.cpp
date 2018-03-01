@@ -10,8 +10,8 @@ char FRONT_ADDR[] = "tcp://180.168.146.187:10010";
 TThostFtdcBrokerIDType	BROKER_ID = "9999";				
 TThostFtdcInvestorIDType INVESTOR_ID = "112585";
 TThostFtdcPasswordType  PASSWORD = "qq824073152";			
-char *ppInstrumentID[] = {"al1803"};			
-int iInstrumentID = 1;								
+char *ppInstrumentID[] = {"al1803", "al1804"};			
+int iInstrumentID = 2;								
 
 int iRequestID = 0;
 int dataNum = 0;
