@@ -172,6 +172,9 @@ Demo_BINARY_DIR:STATIC=/home/luojunbin/project/WQ_project/project4/code/MdSpi/bu
 Demo_SOURCE_DIR:STATIC=/home/luojunbin/project/WQ_project/project4/code/MdSpi
 
 //Dependencies for target
+Ini_LIB_DEPENDS:STATIC=
+
+//Dependencies for target
 MdSpi_LIB_DEPENDS:STATIC=
 
 

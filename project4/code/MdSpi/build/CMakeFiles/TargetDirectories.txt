@@ -1,6 +1,7 @@
 /home/luojunbin/project/WQ_project/project4/code/MdSpi/build/CMakeFiles/edit_cache.dir
 /home/luojunbin/project/WQ_project/project4/code/MdSpi/build/CMakeFiles/rebuild_cache.dir
 /home/luojunbin/project/WQ_project/project4/code/MdSpi/build/src/CMakeFiles/edit_cache.dir
-/home/luojunbin/project/WQ_project/project4/code/MdSpi/build/src/CMakeFiles/rebuild_cache.dir
-/home/luojunbin/project/WQ_project/project4/code/MdSpi/build/src/CMakeFiles/testMdSpi.dir
 /home/luojunbin/project/WQ_project/project4/code/MdSpi/build/src/CMakeFiles/MdSpi.dir
+/home/luojunbin/project/WQ_project/project4/code/MdSpi/build/src/CMakeFiles/testMdSpi.dir
+/home/luojunbin/project/WQ_project/project4/code/MdSpi/build/src/CMakeFiles/Ini.dir
+/home/luojunbin/project/WQ_project/project4/code/MdSpi/build/src/CMakeFiles/rebuild_cache.dir

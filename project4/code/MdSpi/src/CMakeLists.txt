@@ -1,4 +1,4 @@
-SET(CLASS_FILE MdSpi)
+SET(CLASS_FILE MdSpi Ini)
 SET(MAIN_FILE testMdSpi)
 SET(CTP_SO thostmduserapi thosttraderapi)
 

@@ -91,6 +91,7 @@ testMdSpi_EXTERNAL_OBJECTS =
 ../bin/testMdSpi: src/CMakeFiles/testMdSpi.dir/testMdSpi.cpp.o
 ../bin/testMdSpi: src/CMakeFiles/testMdSpi.dir/build.make
 ../bin/testMdSpi: ../lib/libMdSpi.a
+../bin/testMdSpi: ../lib/libIni.a
 ../bin/testMdSpi: src/CMakeFiles/testMdSpi.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/luojunbin/project/WQ_project/project4/code/MdSpi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../../bin/testMdSpi"
 	cd /home/luojunbin/project/WQ_project/project4/code/MdSpi/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/testMdSpi.dir/link.txt --verbose=$(VERBOSE)

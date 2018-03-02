@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named MdSpi
+
+# Build rule for target.
+MdSpi: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 MdSpi
+.PHONY : MdSpi
+
+# fast build rule for target.
+MdSpi/fast:
+	$(MAKE) -f src/CMakeFiles/MdSpi.dir/build.make src/CMakeFiles/MdSpi.dir/build
+.PHONY : MdSpi/fast
+
+#=============================================================================
 # Target rules for targets named testMdSpi
 
 # Build rule for target.
@@ -124,17 +137,17 @@ testMdSpi/fast:
 .PHONY : testMdSpi/fast
 
 #=============================================================================
-# Target rules for targets named MdSpi
+# Target rules for targets named Ini
 
 # Build rule for target.
-MdSpi: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 MdSpi
-.PHONY : MdSpi
+Ini: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Ini
+.PHONY : Ini
 
 # fast build rule for target.
-MdSpi/fast:
-	$(MAKE) -f src/CMakeFiles/MdSpi.dir/build.make src/CMakeFiles/MdSpi.dir/build
-.PHONY : MdSpi/fast
+Ini/fast:
+	$(MAKE) -f src/CMakeFiles/Ini.dir/build.make src/CMakeFiles/Ini.dir/build
+.PHONY : Ini/fast
 
 # Help Target
 help:
@@ -144,8 +157,9 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... testMdSpi"
 	@echo "... MdSpi"
+	@echo "... testMdSpi"
+	@echo "... Ini"
 .PHONY : help
 
 

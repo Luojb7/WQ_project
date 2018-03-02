@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/luojunbin/project/WQ_project/project4/code/MdSpi/src/testMdSpi.cpp" "/home/luojunbin/project/WQ_project/project4/code/MdSpi/build/src/CMakeFiles/testMdSpi.dir/testMdSpi.cpp.o"
+  "/home/luojunbin/project/WQ_project/project4/code/MdSpi/src/Ini.cpp" "/home/luojunbin/project/WQ_project/project4/code/MdSpi/build/src/CMakeFiles/Ini.dir/Ini.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -15,8 +15,6 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/luojunbin/project/WQ_project/project4/code/MdSpi/build/src/CMakeFiles/MdSpi.dir/DependInfo.cmake"
-  "/home/luojunbin/project/WQ_project/project4/code/MdSpi/build/src/CMakeFiles/Ini.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

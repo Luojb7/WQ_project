@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+../inc/Ini.h
+map
+-
+string
+-
+string.h
+-
+stdlib.h
+-
+stdio.h
+-
+
 ../inc/MdSpi.h
 ThostFtdcMdApi.h
 ../inc/ThostFtdcMdApi.h
@@ -27,4 +39,6 @@ ThostFtdcMdApi.h
 /home/luojunbin/project/WQ_project/project4/code/MdSpi/src/ThostFtdcMdApi.h
 MdSpi.h
 /home/luojunbin/project/WQ_project/project4/code/MdSpi/src/MdSpi.h
+Ini.h
+/home/luojunbin/project/WQ_project/project4/code/MdSpi/src/Ini.h
 

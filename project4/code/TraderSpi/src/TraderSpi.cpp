@@ -259,13 +259,13 @@ void CTraderSpi::ReqOrderInsert()
 
 	req.Direction = DIRECTION;
 
-	req.CombOffsetFlag[0] = THOST_FTDC_OF_Open;
+	req.CombOffsetFlag[0] = THOST_FTDC_OF_Close;
 
 	req.CombHedgeFlag[0] = THOST_FTDC_HF_Speculation; 
 
 	req.LimitPrice = LIMIT_PRICE;
 
-	req.VolumeTotalOriginal = 1;
+	req.VolumeTotalOriginal = 5;
 
 	req.TimeCondition = THOST_FTDC_TC_GFD;
 
@@ -291,7 +291,7 @@ void CTraderSpi::ReqOrderInsert()
 
 	int iResult = pUserApi->ReqOrderInsert(&req, ++iRequestID);
 	
-	//cout << "--->>> ReqOrderInsert iResult: " << iResult << endl;
+	cout << "--->>> ReqOrderInsert iResult: " << iResult << endl;
 }
 
 void CTraderSpi::OnRspOrderInsert(CThostFtdcInputOrderField *pInputOrder, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
@@ -309,7 +309,7 @@ void CTraderSpi::OnRspOrderInsert(CThostFtdcInputOrderField *pInputOrder, CThost
 		cout << "--->>> Order insert default" << endl;
 	}
 }
-
+/*
 // request for inserting execorder
 void CTraderSpi::ReqExecOrderInsert()
 {
@@ -421,7 +421,7 @@ void CTraderSpi::OnRspQuoteInsert(CThostFtdcInputQuoteField *pInputQuote, CThost
 	cout << "--->>> request for inserting quote default" << endl;
 	IsErrorRspInfo(pRspInfo);
 }
-
+*/
 void CTraderSpi::ReqOrderAction(CThostFtdcOrderField *pOrder)
 {
 	static bool ORDER_ACTION_SENT = false;		
@@ -461,6 +461,8 @@ void CTraderSpi::ReqOrderAction(CThostFtdcOrderField *pOrder)
 
 	int iResult = pUserApi->ReqOrderAction(&req, ++iRequestID);
 
+	cout << "--->>> ReqOrderAction iResult: " << iResult << endl;
+
 	ORDER_ACTION_SENT = true;
 }
 
@@ -479,7 +481,7 @@ void CTraderSpi::OnRspOrderAction(CThostFtdcInputOrderActionField *pInputOrderAc
 }
 
 /********************/
-
+/*
 void CTraderSpi::ReqExecOrderAction(CThostFtdcExecOrderField *pExecOrder)
 {
 	static bool EXECORDER_ACTION_SENT = false;		
@@ -567,7 +569,7 @@ void CTraderSpi::OnRspQuoteAction(CThostFtdcInputQuoteActionField *pInpuQuoteAct
 	cout << "--->>> " << "OnRspQuoteAction" << endl;
 	IsErrorRspInfo(pRspInfo);
 }
-
+*/
 void CTraderSpi::OnRtnOrder(CThostFtdcOrderField *pOrder)
 {
 	cout << "--->>> Receive order response"  << endl;
@@ -575,12 +577,15 @@ void CTraderSpi::OnRtnOrder(CThostFtdcOrderField *pOrder)
 	{
 		cout << "direction: " << pOrder->Direction << endl;
 		if (IsTradingOrder(pOrder))
-			ReqOrderAction(pOrder);
+		{
+			//ReqOrderAction(pOrder);
+			cout << "--->>> Waiting for trading" << endl;
+		}
 		else if (pOrder->OrderStatus == THOST_FTDC_OST_Canceled)
 			cout << "--->>> Revoke order succeed" << endl;
 	}
 }
-
+/*
 void CTraderSpi::OnRtnExecOrder(CThostFtdcExecOrderField *pExecOrder)
 {
 	cout << "--->>> " << "OnRtnExecOrder"  << endl;
@@ -609,7 +614,7 @@ void CTraderSpi::OnRtnQuote(CThostFtdcQuoteField *pQuote)
 			cout << "papapa" << endl;
 	}
 }
-
+*/
 void CTraderSpi::OnRtnTrade(CThostFtdcTradeField *pTrade)
 {
 	cout << "--->>> Trade succeed" << endl;
@@ -652,7 +657,7 @@ bool CTraderSpi::IsMyOrder(CThostFtdcOrderField *pOrder)
 			(pOrder->SessionID == SESSION_ID) &&
 			(strcmp(pOrder->OrderRef, ORDER_REF) == 0));
 }
-
+/*
 bool CTraderSpi::IsMyExecOrder(CThostFtdcExecOrderField *pExecOrder)
 {
 	return ((pExecOrder->FrontID == FRONT_ID) &&
@@ -666,14 +671,14 @@ bool CTraderSpi::IsMyQuote(CThostFtdcQuoteField *pQuote)
 		(pQuote->SessionID == SESSION_ID) &&
 		(strcmp(pQuote->QuoteRef, QUOTE_REF) == 0));
 }
-
+*/
 bool CTraderSpi::IsTradingOrder(CThostFtdcOrderField *pOrder)
 {
 	return ((pOrder->OrderStatus != THOST_FTDC_OST_PartTradedNotQueueing) &&
 			(pOrder->OrderStatus != THOST_FTDC_OST_Canceled) &&
 			(pOrder->OrderStatus != THOST_FTDC_OST_AllTraded));
 }
-
+/*
 bool CTraderSpi::IsTradingExecOrder(CThostFtdcExecOrderField *pExecOrder)
 {
 	return (pExecOrder->ExecResult != THOST_FTDC_OER_Canceled);
@@ -683,3 +688,4 @@ bool CTraderSpi::IsTradingQuote(CThostFtdcQuoteField *pQuote)
 {
 	return (pQuote->QuoteStatus != THOST_FTDC_OST_Canceled);
 }
+*/

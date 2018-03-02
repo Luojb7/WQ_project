@@ -111,6 +111,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+src/CMakeFiles/MdSpi.dir/rule:
+	cd /home/luojunbin/project/WQ_project/project4/code/MdSpi/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/MdSpi.dir/rule
+.PHONY : src/CMakeFiles/MdSpi.dir/rule
+
+# Convenience name for target.
+MdSpi: src/CMakeFiles/MdSpi.dir/rule
+
+.PHONY : MdSpi
+
+# fast build rule for target.
+MdSpi/fast:
+	cd /home/luojunbin/project/WQ_project/project4/code/MdSpi/build && $(MAKE) -f src/CMakeFiles/MdSpi.dir/build.make src/CMakeFiles/MdSpi.dir/build
+.PHONY : MdSpi/fast
+
+# Convenience name for target.
 src/CMakeFiles/testMdSpi.dir/rule:
 	cd /home/luojunbin/project/WQ_project/project4/code/MdSpi/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/testMdSpi.dir/rule
 .PHONY : src/CMakeFiles/testMdSpi.dir/rule
@@ -126,19 +141,46 @@ testMdSpi/fast:
 .PHONY : testMdSpi/fast
 
 # Convenience name for target.
-src/CMakeFiles/MdSpi.dir/rule:
-	cd /home/luojunbin/project/WQ_project/project4/code/MdSpi/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/MdSpi.dir/rule
-.PHONY : src/CMakeFiles/MdSpi.dir/rule
+src/CMakeFiles/Ini.dir/rule:
+	cd /home/luojunbin/project/WQ_project/project4/code/MdSpi/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/Ini.dir/rule
+.PHONY : src/CMakeFiles/Ini.dir/rule
 
 # Convenience name for target.
-MdSpi: src/CMakeFiles/MdSpi.dir/rule
+Ini: src/CMakeFiles/Ini.dir/rule
 
-.PHONY : MdSpi
+.PHONY : Ini
 
 # fast build rule for target.
-MdSpi/fast:
-	cd /home/luojunbin/project/WQ_project/project4/code/MdSpi/build && $(MAKE) -f src/CMakeFiles/MdSpi.dir/build.make src/CMakeFiles/MdSpi.dir/build
-.PHONY : MdSpi/fast
+Ini/fast:
+	cd /home/luojunbin/project/WQ_project/project4/code/MdSpi/build && $(MAKE) -f src/CMakeFiles/Ini.dir/build.make src/CMakeFiles/Ini.dir/build
+.PHONY : Ini/fast
+
+Ini.o: Ini.cpp.o
+
+.PHONY : Ini.o
+
+# target to build an object file
+Ini.cpp.o:
+	cd /home/luojunbin/project/WQ_project/project4/code/MdSpi/build && $(MAKE) -f src/CMakeFiles/Ini.dir/build.make src/CMakeFiles/Ini.dir/Ini.cpp.o
+.PHONY : Ini.cpp.o
+
+Ini.i: Ini.cpp.i
+
+.PHONY : Ini.i
+
+# target to preprocess a source file
+Ini.cpp.i:
+	cd /home/luojunbin/project/WQ_project/project4/code/MdSpi/build && $(MAKE) -f src/CMakeFiles/Ini.dir/build.make src/CMakeFiles/Ini.dir/Ini.cpp.i
+.PHONY : Ini.cpp.i
+
+Ini.s: Ini.cpp.s
+
+.PHONY : Ini.s
+
+# target to generate assembly for a file
+Ini.cpp.s:
+	cd /home/luojunbin/project/WQ_project/project4/code/MdSpi/build && $(MAKE) -f src/CMakeFiles/Ini.dir/build.make src/CMakeFiles/Ini.dir/Ini.cpp.s
+.PHONY : Ini.cpp.s
 
 MdSpi.o: MdSpi.cpp.o
 
@@ -201,9 +243,13 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... rebuild_cache"
-	@echo "... testMdSpi"
 	@echo "... MdSpi"
+	@echo "... testMdSpi"
+	@echo "... Ini"
+	@echo "... rebuild_cache"
+	@echo "... Ini.o"
+	@echo "... Ini.i"
+	@echo "... Ini.s"
 	@echo "... MdSpi.o"
 	@echo "... MdSpi.i"
 	@echo "... MdSpi.s"
