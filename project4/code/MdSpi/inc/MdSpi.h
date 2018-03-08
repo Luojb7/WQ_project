@@ -34,10 +34,12 @@ public:
 	// 
 	virtual void OnRtnForQuoteRsp(CThostFtdcForQuoteRspField *pForQuoteRsp) ;
 	
-private:
+public:
 	void ReqUserLogin();
 
 	void SubscribeMarketData();
+
+	void UnSubscribeMarketData();
 
 	void SubscribeForQuoteRsp();
 

@@ -1,5 +1,6 @@
 #include "ThostFtdcTraderApi.h"
 #include <stdio.h>
+#include <fstream>
 
 class CTraderSpi : public CThostFtdcTraderSpi
 {
@@ -26,22 +27,7 @@ public:
 	virtual void OnRspOrderInsert(CThostFtdcInputOrderField *pInputOrder, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
 
 	//
-	//virtual void OnRspExecOrderInsert(CThostFtdcInputExecOrderField *pInputExecOrder, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
-
-	// 
-	//virtual void OnRspForQuoteInsert(CThostFtdcInputForQuoteField *pInputForQuote, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
-
-	// 
-	//virtual void OnRspQuoteInsert(CThostFtdcInputQuoteField *pInputQuote, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
-
-	//
 	virtual void OnRspOrderAction(CThostFtdcInputOrderActionField *pInputOrderAction, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
-
-	//
-	//virtual void OnRspExecOrderAction(CThostFtdcInputExecOrderActionField *pInputExecOrderAction, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
-
-	//
-	//virtual void OnRspQuoteAction(CThostFtdcInputQuoteActionField *pInputQuoteAction, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
 
 	//
 	virtual void OnRspError(CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
@@ -54,20 +40,14 @@ public:
 	
 	//
 	virtual void OnRtnOrder(CThostFtdcOrderField *pOrder);
-
-	//
-	//virtual void OnRtnExecOrder(CThostFtdcExecOrderField *pExecOrder);
-
-	//
-	//virtual void OnRtnForQuoteRsp(CThostFtdcForQuoteRspField *pForQuoteRsp);
-
-	//
-	//virtual void OnRtnQuote(CThostFtdcQuoteField *pQuote);
 	
 	//
 	virtual void OnRtnTrade(CThostFtdcTradeField *pTrade);
 
-private:
+
+	virtual void OnRspQryOrder(CThostFtdcOrderField *pOrder, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
+
+public:
 	
 	void ReqUserLogin();
 	
@@ -81,29 +61,16 @@ private:
 	
 	void ReqOrderInsert();
 	
-	//void ReqExecOrderInsert();
-	
-	//void ReqForQuoteInsert();
-	
-	//void ReqQuoteInsert();
-	
 	void ReqOrderAction(CThostFtdcOrderField *pOrder);
-	
-	//void ReqExecOrderAction(CThostFtdcExecOrderField *pExecOrder);
-	
-	//void ReqQuoteAction(CThostFtdcQuoteField *pQuote);
 
 	bool IsErrorRspInfo(CThostFtdcRspInfoField *pRspInfo);
 	
 	bool IsMyOrder(CThostFtdcOrderField *pOrder);
 	
-	//bool IsMyExecOrder(CThostFtdcExecOrderField *pExecOrder);
-	
-	//bool IsMyQuote(CThostFtdcQuoteField *pQuote);
-	
 	bool IsTradingOrder(CThostFtdcOrderField *pOrder);	
-	
-	//bool IsTradingExecOrder(CThostFtdcExecOrderField *pExecOrder);
-	
-	//bool IsTradingQuote(CThostFtdcQuoteField *pQuote);
+
+	void ReqQryOrder(char *instrumentId, char *orderSysId);
+
+	void SetOrderType();
+
 };

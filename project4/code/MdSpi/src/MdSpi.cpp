@@ -14,6 +14,7 @@ extern TThostFtdcPasswordType	PASSWORD;
 extern char* ppInstrumentID[];	
 extern int iInstrumentID;
 
+extern bool LoginFlag;
 extern int iRequestID;
 extern int dataNum;
 
@@ -33,7 +34,8 @@ void CMdSpi::OnRspError(CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool b
 void CMdSpi::OnFrontConnected()
 {
 	cout << "--->>> connect succeed" << endl;
-	ReqUserLogin();
+	LoginFlag = 1;
+	//ReqUserLogin();
 }
 
 void CMdSpi::ReqUserLogin()
@@ -62,9 +64,9 @@ void CMdSpi::OnRspUserLogin(CThostFtdcRspUserLoginField *pRspUserLogin, CThostFt
 	{
 		cout << "--->>> login succeed!" << endl;
 		cout << "Login date: " << pRspUserLogin->TradingDay << endl;
-		cout << "Login time: " << pRspUserLogin->LoginTime << endl;
-		cout << "userID: " << pRspUserLogin->UserID << endl;
-		SubscribeMarketData();
+		cout << "FrontID: " << pRspUserLogin->FrontID << endl;
+		cout << "SessionID: " << pRspUserLogin->SessionID << endl;
+		//SubscribeMarketData();
 		//SubscribeForQuoteRsp();
 	}
 	else
@@ -162,14 +164,6 @@ void CMdSpi::OnRspUnSubForQuoteRsp(CThostFtdcSpecificInstrumentField *pSpecificI
 
 void CMdSpi::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketData)
 {
-	cout << "--->>> Depth market data:" << endl;
-	cout << "date: " << pDepthMarketData->TradingDay << endl;
-	cout << "InstrumentID: " << pDepthMarketData->InstrumentID << endl;
-	cout << "LastPrice: " << pDepthMarketData->LastPrice << endl;
-	cout << "Volume: " << pDepthMarketData->Volume << endl;
-	cout << "OpenInterest: " << pDepthMarketData->OpenInterest << endl;
-	cout << "ClosePrice: " << pDepthMarketData->ClosePrice << endl;
-	cout << "UpdateTime: " << pDepthMarketData->UpdateTime << endl;
 	char filePath[100] = {'\0'};
 	sprintf(filePath, "%s_market_data.csv", pDepthMarketData->InstrumentID);
 	ofstream outFile;
@@ -195,4 +189,9 @@ void CMdSpi::OnRtnForQuoteRsp(CThostFtdcForQuoteRspField *pForQuoteRsp)
 	cout << "--->>> Quote response: " << endl;
 	cout << "Date: " << pForQuoteRsp->TradingDay << endl;
 	cout << "InstrumentID: " << pForQuoteRsp->InstrumentID << endl;
+}
+
+void CMdSpi::UnSubscribeMarketData()
+{
+	int iResult = pUserApi->UnSubscribeMarketData(ppInstrumentID, iInstrumentID);
 }

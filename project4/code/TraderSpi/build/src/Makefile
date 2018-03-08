@@ -111,6 +111,36 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+src/CMakeFiles/TraderSpi.dir/rule:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/TraderSpi.dir/rule
+.PHONY : src/CMakeFiles/TraderSpi.dir/rule
+
+# Convenience name for target.
+TraderSpi: src/CMakeFiles/TraderSpi.dir/rule
+
+.PHONY : TraderSpi
+
+# fast build rule for target.
+TraderSpi/fast:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/TraderSpi.dir/build.make src/CMakeFiles/TraderSpi.dir/build
+.PHONY : TraderSpi/fast
+
+# Convenience name for target.
+src/CMakeFiles/Ini.dir/rule:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/Ini.dir/rule
+.PHONY : src/CMakeFiles/Ini.dir/rule
+
+# Convenience name for target.
+Ini: src/CMakeFiles/Ini.dir/rule
+
+.PHONY : Ini
+
+# fast build rule for target.
+Ini/fast:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/Ini.dir/build.make src/CMakeFiles/Ini.dir/build
+.PHONY : Ini/fast
+
+# Convenience name for target.
 src/CMakeFiles/testTraderSpi.dir/rule:
 	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/testTraderSpi.dir/rule
 .PHONY : src/CMakeFiles/testTraderSpi.dir/rule
@@ -125,20 +155,32 @@ testTraderSpi/fast:
 	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/testTraderSpi.dir/build.make src/CMakeFiles/testTraderSpi.dir/build
 .PHONY : testTraderSpi/fast
 
-# Convenience name for target.
-src/CMakeFiles/TraderSpi.dir/rule:
-	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/TraderSpi.dir/rule
-.PHONY : src/CMakeFiles/TraderSpi.dir/rule
+Ini.o: Ini.cpp.o
 
-# Convenience name for target.
-TraderSpi: src/CMakeFiles/TraderSpi.dir/rule
+.PHONY : Ini.o
 
-.PHONY : TraderSpi
+# target to build an object file
+Ini.cpp.o:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/Ini.dir/build.make src/CMakeFiles/Ini.dir/Ini.cpp.o
+.PHONY : Ini.cpp.o
 
-# fast build rule for target.
-TraderSpi/fast:
-	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/TraderSpi.dir/build.make src/CMakeFiles/TraderSpi.dir/build
-.PHONY : TraderSpi/fast
+Ini.i: Ini.cpp.i
+
+.PHONY : Ini.i
+
+# target to preprocess a source file
+Ini.cpp.i:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/Ini.dir/build.make src/CMakeFiles/Ini.dir/Ini.cpp.i
+.PHONY : Ini.cpp.i
+
+Ini.s: Ini.cpp.s
+
+.PHONY : Ini.s
+
+# target to generate assembly for a file
+Ini.cpp.s:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/Ini.dir/build.make src/CMakeFiles/Ini.dir/Ini.cpp.s
+.PHONY : Ini.cpp.s
 
 TraderSpi.o: TraderSpi.cpp.o
 
@@ -201,9 +243,13 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... rebuild_cache"
-	@echo "... testTraderSpi"
 	@echo "... TraderSpi"
+	@echo "... Ini"
+	@echo "... testTraderSpi"
+	@echo "... rebuild_cache"
+	@echo "... Ini.o"
+	@echo "... Ini.i"
+	@echo "... Ini.s"
 	@echo "... TraderSpi.o"
 	@echo "... TraderSpi.i"
 	@echo "... TraderSpi.s"

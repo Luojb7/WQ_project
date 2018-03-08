@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+../inc/Ini.h
+map
+-
+string
+-
+string.h
+-
+stdlib.h
+-
+stdio.h
+-
+
 ../inc/ThostFtdcTraderApi.h
 ThostFtdcUserApiStruct.h
 ../inc/ThostFtdcUserApiStruct.h
@@ -21,6 +33,8 @@ ThostFtdcTraderApi.h
 ../inc/ThostFtdcTraderApi.h
 stdio.h
 -
+fstream
+-
 
 /home/luojunbin/project/WQ_project/project4/code/TraderSpi/src/TraderSpi.cpp
 TraderSpi.h
@@ -34,5 +48,7 @@ cstring
 unistd.h
 -
 stdlib.h
+-
+Ini.h
 -
 

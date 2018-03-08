@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../inc/Ini.h
+map
+-
+string
+-
+string.h
+-
+stdlib.h
+-
+stdio.h
+-
+
+/home/luojunbin/project/WQ_project/project4/code/TraderSpi/src/Ini.cpp
+Ini.h
+/home/luojunbin/project/WQ_project/project4/code/TraderSpi/src/Ini.h
+

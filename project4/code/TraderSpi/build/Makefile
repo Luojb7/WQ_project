@@ -111,19 +111,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named testTraderSpi
-
-# Build rule for target.
-testTraderSpi: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 testTraderSpi
-.PHONY : testTraderSpi
-
-# fast build rule for target.
-testTraderSpi/fast:
-	$(MAKE) -f src/CMakeFiles/testTraderSpi.dir/build.make src/CMakeFiles/testTraderSpi.dir/build
-.PHONY : testTraderSpi/fast
-
-#=============================================================================
 # Target rules for targets named TraderSpi
 
 # Build rule for target.
@@ -136,6 +123,32 @@ TraderSpi/fast:
 	$(MAKE) -f src/CMakeFiles/TraderSpi.dir/build.make src/CMakeFiles/TraderSpi.dir/build
 .PHONY : TraderSpi/fast
 
+#=============================================================================
+# Target rules for targets named Ini
+
+# Build rule for target.
+Ini: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Ini
+.PHONY : Ini
+
+# fast build rule for target.
+Ini/fast:
+	$(MAKE) -f src/CMakeFiles/Ini.dir/build.make src/CMakeFiles/Ini.dir/build
+.PHONY : Ini/fast
+
+#=============================================================================
+# Target rules for targets named testTraderSpi
+
+# Build rule for target.
+testTraderSpi: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 testTraderSpi
+.PHONY : testTraderSpi
+
+# fast build rule for target.
+testTraderSpi/fast:
+	$(MAKE) -f src/CMakeFiles/testTraderSpi.dir/build.make src/CMakeFiles/testTraderSpi.dir/build
+.PHONY : testTraderSpi/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -144,8 +157,9 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... testTraderSpi"
 	@echo "... TraderSpi"
+	@echo "... Ini"
+	@echo "... testTraderSpi"
 .PHONY : help
 
 

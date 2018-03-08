@@ -41,4 +41,12 @@ MdSpi.h
 /home/luojunbin/project/WQ_project/project4/code/MdSpi/src/MdSpi.h
 Ini.h
 /home/luojunbin/project/WQ_project/project4/code/MdSpi/src/Ini.h
+vector
+-
+string
+-
+cstring
+-
+unistd.h
+-
 

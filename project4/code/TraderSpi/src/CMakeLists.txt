@@ -1,4 +1,4 @@
-SET(CLASS_FILE TraderSpi)
+SET(CLASS_FILE TraderSpi Ini)
 SET(MAIN_FILE testTraderSpi)
 SET(CTP_SO thostmduserapi thosttraderapi)
 

@@ -172,6 +172,9 @@ Demo_BINARY_DIR:STATIC=/home/luojunbin/project/WQ_project/project4/code/TraderSp
 Demo_SOURCE_DIR:STATIC=/home/luojunbin/project/WQ_project/project4/code/TraderSpi
 
 //Dependencies for target
+Ini_LIB_DEPENDS:STATIC=
+
+//Dependencies for target
 TraderSpi_LIB_DEPENDS:STATIC=
 
 

@@ -91,6 +91,7 @@ testTraderSpi_EXTERNAL_OBJECTS =
 ../bin/testTraderSpi: src/CMakeFiles/testTraderSpi.dir/testTraderSpi.cpp.o
 ../bin/testTraderSpi: src/CMakeFiles/testTraderSpi.dir/build.make
 ../bin/testTraderSpi: ../lib/libTraderSpi.a
+../bin/testTraderSpi: ../lib/libIni.a
 ../bin/testTraderSpi: src/CMakeFiles/testTraderSpi.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../../bin/testTraderSpi"
 	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/testTraderSpi.dir/link.txt --verbose=$(VERBOSE)

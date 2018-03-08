@@ -4,6 +4,7 @@
 #include <cstring>
 #include <unistd.h>
 #include <stdlib.h>
+#include <Ini.h>
 
 using namespace std;
 
@@ -14,17 +15,16 @@ extern char BROKER_ID[];		// borker id
 extern char INVESTOR_ID[];		// investor id
 extern char PASSWORD[];			// investor password
 extern char INSTRUMENT_ID[];	// instrument id
-extern TThostFtdcPriceType	LIMIT_PRICE;	// limit price
-extern TThostFtdcDirectionType	DIRECTION;	// direction
 
+extern bool LoginFlag;
 extern int iRequestID;
+extern char *OrderFilePath;
 
 TThostFtdcFrontIDType	FRONT_ID;	
 TThostFtdcSessionIDType	SESSION_ID;	 // session id
 TThostFtdcOrderRefType	ORDER_REF;	 // order reference
-TThostFtdcOrderRefType	EXECORDER_REF;	 // execorder reference
-TThostFtdcOrderRefType	FORQUOTE_REF;	 // forquote reference
-TThostFtdcOrderRefType	QUOTE_REF;	 // quote reference
+
+CThostFtdcInputOrderField InsertOrder;
 
 // 
 bool IsFlowControl(int iResult)
@@ -36,7 +36,7 @@ bool IsFlowControl(int iResult)
 void CTraderSpi::OnFrontConnected()
 {
 	cout << "--->>> connect succeed" << endl;
-	ReqUserLogin();
+	LoginFlag = 1;
 }
 
 // request for login
@@ -60,16 +60,28 @@ void CTraderSpi::OnRspUserLogin(CThostFtdcRspUserLoginField *pRspUserLogin, CTho
 		int iNextOrderRef = atoi(pRspUserLogin->MaxOrderRef);
 		iNextOrderRef++;
 		sprintf(ORDER_REF, "%d", iNextOrderRef);
-		sprintf(EXECORDER_REF, "%d", 1);
-		sprintf(FORQUOTE_REF, "%d", 1);
-		sprintf(QUOTE_REF, "%d", 1);
 
 		cout << "--->>> Login succeed" << endl;
 		cout << "Date: " << pRspUserLogin->TradingDay << endl;
 		cout << "LoginTime: " << pRspUserLogin->LoginTime << endl;
+		cout << "BrokerID: " << pRspUserLogin->BrokerID << endl;
 		cout << "userID: " << pRspUserLogin->UserID << endl;
+		cout << "SystemName: " << pRspUserLogin->SystemName << endl;
+		cout << "FrontID: " << pRspUserLogin->FrontID << endl;
+		cout << "SessionID: " << pRspUserLogin->SessionID << endl;
+		cout << "MaxOrderRef: " << pRspUserLogin->MaxOrderRef << endl << endl;
 
 		ReqSettlementInfoConfirm();
+
+		char filePath[100] = {'\0'};
+		sprintf(filePath, "%s_order.csv", pRspUserLogin->UserID);
+		ofstream outFile;
+		outFile.open(filePath, ios::out);
+		outFile << "OrderSysID" << ","
+				<< "InstrumentID" << "," 
+				<< "LimitPrice" << "," 
+				<< "Volume" << "," 
+				<< "OrderStatus" << "," << endl; 
 	}
 	else
 	{
@@ -94,9 +106,9 @@ void CTraderSpi::OnRspSettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField
 	{
 		cout << "--->>> Settlement Information Confirm succeed" << endl;
 		cout << "Confirm date: " << pSettlementInfoConfirm->ConfirmDate << endl;
-		cout << "Confirm time: " << pSettlementInfoConfirm->ConfirmTime << endl;
+		cout << "Confirm time: " << pSettlementInfoConfirm->ConfirmTime << endl << endl;
 
-		ReqQryInstrument();
+		//ReqQryInstrument();
 	}
 	else
 	{
@@ -119,7 +131,7 @@ void CTraderSpi::ReqQryInstrument()
 		}
 		else{
 			cout << "--->>> Query instrument iResult: " << iResult << endl;
-			usleep(1000);
+			usleep(10000);
 		}
 	} // while
 }
@@ -133,10 +145,19 @@ void CTraderSpi::OnRspQryInstrument(CThostFtdcInstrumentField *pInstrument, CTho
 		cout << "InstrumentID: " << pInstrument->InstrumentID << endl;
 		cout << "DeliveryYear: " << pInstrument->DeliveryYear << endl;
 		cout << "DeliveryMonth: " << pInstrument->DeliveryMonth << endl;
-		cout << "IsTrading: " << pInstrument->IsTrading << endl;
+		cout << "MaxMarketOrderVolume: " << pInstrument->MaxMarketOrderVolume << endl;
+		cout << "MinMarketOrderVolume: " << pInstrument->MinMarketOrderVolume << endl;
+		cout << "MaxLimitOrderVolume: " << pInstrument->MaxLimitOrderVolume << endl;
+		cout << "MinLimitOrderVolume: " << pInstrument->MinLimitOrderVolume << endl;
 		cout << "PriceTick: " << pInstrument->PriceTick << endl;
+		cout << "IsTrading: " << pInstrument->IsTrading << endl;
+		cout << "ExpireDate: " << pInstrument->ExpireDate << endl;
+		cout << "InstLifePhase: " << pInstrument->InstLifePhase << endl;
+		cout << "CombinationType: " << pInstrument->CombinationType << endl;
+		cout << "MinBuyVolume: " << pInstrument->MinBuyVolume << endl;
+		cout << "MinSellVolume: " << pInstrument->MinSellVolume << endl << endl;
 
-		ReqQryTradingAccount();
+		//ReqQryTradingAccount();
 	}
 	else
 	{
@@ -161,7 +182,7 @@ void CTraderSpi::ReqQryTradingAccount()
 		else
 		{
 			cout << "--->>> Query account iResult: " << iResult << endl;
-			usleep(1000);
+			usleep(10000);
 		}
 	} // while
 }
@@ -173,8 +194,14 @@ void CTraderSpi::OnRspQryTradingAccount(CThostFtdcTradingAccountField *pTradingA
 	{
 		cout << "--->>> Query account succeed" << endl;
 		cout << "AccountID: " << pTradingAccount->AccountID << endl;
-		cout << "Available money: " << pTradingAccount->Available << endl;
-		ReqQryInvestorPosition();
+		cout << "CurrMargin: " << pTradingAccount->CurrMargin << endl;
+		cout << "CashIn: " << pTradingAccount->CashIn << endl;
+		cout << "Commission: " << pTradingAccount->Commission << endl;
+		cout << "CloseProfit: " << pTradingAccount->CloseProfit << endl;
+		cout << "PositionProfit: " << pTradingAccount->PositionProfit << endl;
+		cout << "Available: " << pTradingAccount->Available << endl;
+		cout << "WithdrawQuota: " << pTradingAccount->WithdrawQuota << endl << endl;
+		//ReqQryInvestorPosition();
 	}
 	else
 	{
@@ -200,7 +227,7 @@ void CTraderSpi::ReqQryInvestorPosition()
 		else
 		{
 			cout << "--->>> Query investor position iResult " << iResult << endl;
-			usleep(1000);
+			usleep(10000);
 		}
 	} // while
 }
@@ -216,21 +243,25 @@ void CTraderSpi::OnRspQryInvestorPosition(CThostFtdcInvestorPositionField *pInve
 		if(pInvestorPosition)
 		{
 			cout << "InstrumentID: " << pInvestorPosition->InstrumentID << endl;
-			cout << "OpenAmount: " << pInvestorPosition->OpenAmount << endl;
+			cout << "InvestorID: " << pInvestorPosition->InvestorID << endl;
+			cout << "YdPosition: " << pInvestorPosition->YdPosition << endl;
+			cout << "Position: " << pInvestorPosition->Position << endl;
 			cout << "OpenVolume: " << pInvestorPosition->OpenVolume << endl;
-		}
+			cout << "OpenAmount: " << pInvestorPosition->OpenAmount << endl;
+			cout << "CloseVolume: " << pInvestorPosition->CloseVolume << endl;
+			cout << "CloseAmount: " << pInvestorPosition->CloseAmount << endl;
+			cout << "PositionCost: " << pInvestorPosition->PositionCost << endl;
+			cout << "UseMargin: " << pInvestorPosition->UseMargin << endl;
+			cout << "PreSettlementPrice: " << pInvestorPosition->PreSettlementPrice << endl;
+			cout << "SettlementPrice: " << pInvestorPosition->SettlementPrice << endl << endl;		}
 		else
 		{
 			cout << "No position" << endl;
 		}
 
-		ReqOrderInsert(); 
+		//ReqOrderInsert(); 
+		//ReqQryOrder("al1803");
 
-		//ReqExecOrderInsert();
-
-		//ReqForQuoteInsert();
-
-		//ReqQuoteInsert();
 	}
 	else
 	{
@@ -238,60 +269,13 @@ void CTraderSpi::OnRspQryInvestorPosition(CThostFtdcInvestorPositionField *pInve
 	}
 }
 
+
 // request for inserting order
 void CTraderSpi::ReqOrderInsert()
 {
-	CThostFtdcInputOrderField req;
+	SetOrderType();
 
-	memset(&req, 0, sizeof(req));
-
-	strcpy(req.BrokerID, BROKER_ID);
-
-	strcpy(req.InvestorID, INVESTOR_ID);
-
-	strcpy(req.InstrumentID, INSTRUMENT_ID);
-
-	strcpy(req.OrderRef, ORDER_REF);
-
-//	TThostFtdcUserIDType	UserID;
-
-	req.OrderPriceType = THOST_FTDC_OPT_LimitPrice;  // 2
-
-	req.Direction = DIRECTION;
-
-	req.CombOffsetFlag[0] = THOST_FTDC_OF_Close;
-
-	req.CombHedgeFlag[0] = THOST_FTDC_HF_Speculation; 
-
-	req.LimitPrice = LIMIT_PRICE;
-
-	req.VolumeTotalOriginal = 5;
-
-	req.TimeCondition = THOST_FTDC_TC_GFD;
-
-//	TThostFtdcDateType	GTDDate;
-
-	req.VolumeCondition = THOST_FTDC_VC_AV;
-
-	req.MinVolume = 1;
-
-	req.ContingentCondition = THOST_FTDC_CC_Immediately; // 1
-
-//	TThostFtdcPriceType	StopPrice;
-
-	req.ForceCloseReason = THOST_FTDC_FCC_NotForceClose;
-
-	req.IsAutoSuspend = 0;
-
-//	TThostFtdcBusinessUnitType	BusinessUnit;
-
-//	TThostFtdcRequestIDType	RequestID;
-
-	req.UserForceClose = 0;
-
-	int iResult = pUserApi->ReqOrderInsert(&req, ++iRequestID);
-	
-	cout << "--->>> ReqOrderInsert iResult: " << iResult << endl;
+	int iResult = pUserApi->ReqOrderInsert(&InsertOrder, ++iRequestID);
 }
 
 void CTraderSpi::OnRspOrderInsert(CThostFtdcInputOrderField *pInputOrder, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
@@ -309,119 +293,7 @@ void CTraderSpi::OnRspOrderInsert(CThostFtdcInputOrderField *pInputOrder, CThost
 		cout << "--->>> Order insert default" << endl;
 	}
 }
-/*
-// request for inserting execorder
-void CTraderSpi::ReqExecOrderInsert()
-{
-	CThostFtdcInputExecOrderField req;
 
-	memset(&req, 0, sizeof(req));
-
-	strcpy(req.BrokerID, BROKER_ID);
-
-	strcpy(req.InvestorID, INVESTOR_ID);
-
-	strcpy(req.InstrumentID, INSTRUMENT_ID);
-
-	strcpy(req.ExecOrderRef, EXECORDER_REF);
-
-	//	TThostFtdcUserIDType	UserID;
-
-	req.Volume=1;
-
-	//TThostFtdcRequestIDType	RequestID;
-
-	//TThostFtdcBusinessUnitType	BusinessUnit;
-
-	req.OffsetFlag=THOST_FTDC_OF_Close;
-
-	req.HedgeFlag=THOST_FTDC_HF_Speculation;
-
-	req.ActionType=THOST_FTDC_ACTP_Exec;
-
-	req.PosiDirection=THOST_FTDC_PD_Long;
-
-	req.ReservePositionFlag=THOST_FTDC_EOPF_UnReserve;
-
-	req.CloseFlag=THOST_FTDC_EOCF_AutoClose;
-
-	int iResult = pUserApi->ReqExecOrderInsert(&req, ++iRequestID);
-}
-
-// request for inserting forquote
-void CTraderSpi::ReqForQuoteInsert()
-{
-	CThostFtdcInputForQuoteField req;
-	memset(&req, 0, sizeof(req));
-
-	strcpy(req.BrokerID, BROKER_ID);
-
-	strcpy(req.InvestorID, INVESTOR_ID);
-
-	strcpy(req.InstrumentID, INSTRUMENT_ID);
-
-	strcpy(req.ForQuoteRef, EXECORDER_REF);
-
-	//	TThostFtdcUserIDType	UserID;
-
-	int iResult = pUserApi->ReqForQuoteInsert(&req, ++iRequestID);
-}
-
-// request for inserting order
-void CTraderSpi::ReqQuoteInsert()
-{
-	CThostFtdcInputQuoteField req;
-	memset(&req, 0, sizeof(req));
-
-	strcpy(req.BrokerID, BROKER_ID);
-
-	strcpy(req.InvestorID, INVESTOR_ID);
-
-	strcpy(req.InstrumentID, INSTRUMENT_ID);
-
-	strcpy(req.QuoteRef, QUOTE_REF);
-
-	req.AskPrice=LIMIT_PRICE;
-
-	req.BidPrice=LIMIT_PRICE-1.0;
-
-	req.AskVolume=1;
-
-	req.BidVolume=1;
-
-	//TThostFtdcRequestIDType	RequestID;
-
-	//TThostFtdcBusinessUnitType	BusinessUnit;
-
-	req.AskOffsetFlag=THOST_FTDC_OF_Open;
-
-	req.BidOffsetFlag=THOST_FTDC_OF_Open;
-
-	req.AskHedgeFlag=THOST_FTDC_HF_Speculation;
-
-	req.BidHedgeFlag=THOST_FTDC_HF_Speculation;
-	
-	int iResult = pUserApi->ReqQuoteInsert(&req, ++iRequestID);
-}
-
-void CTraderSpi::OnRspExecOrderInsert(CThostFtdcInputExecOrderField *pInputExecOrder, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
-{
-	cout << "--->>> request for inserting execorder default" << endl;
-	IsErrorRspInfo(pRspInfo);
-}
-
-void CTraderSpi::OnRspForQuoteInsert(CThostFtdcInputForQuoteField *pInputForQuote, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
-{
-	cout << "--->>> request for inserting forquote default" << endl;
-	IsErrorRspInfo(pRspInfo);
-}
-
-void CTraderSpi::OnRspQuoteInsert(CThostFtdcInputQuoteField *pInputQuote, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
-{
-	cout << "--->>> request for inserting quote default" << endl;
-	IsErrorRspInfo(pRspInfo);
-}
-*/
 void CTraderSpi::ReqOrderAction(CThostFtdcOrderField *pOrder)
 {
 	static bool ORDER_ACTION_SENT = false;		
@@ -441,9 +313,11 @@ void CTraderSpi::ReqOrderAction(CThostFtdcOrderField *pOrder)
 
 //	TThostFtdcRequestIDType	RequestID;
 
-	req.FrontID = FRONT_ID;
+	req.FrontID = pOrder->FrontID;
+	// req.FrontID = FRONT_ID;
 
-	req.SessionID = SESSION_ID;
+	req.SessionID = pOrder->SessionID;
+	// req.SessionID = SESSION_ID;
 
 //	TThostFtdcExchangeIDType	ExchangeID;
 
@@ -460,8 +334,6 @@ void CTraderSpi::ReqOrderAction(CThostFtdcOrderField *pOrder)
 	strcpy(req.InstrumentID, pOrder->InstrumentID);
 
 	int iResult = pUserApi->ReqOrderAction(&req, ++iRequestID);
-
-	cout << "--->>> ReqOrderAction iResult: " << iResult << endl;
 
 	ORDER_ACTION_SENT = true;
 }
@@ -480,141 +352,34 @@ void CTraderSpi::OnRspOrderAction(CThostFtdcInputOrderActionField *pInputOrderAc
 	}
 }
 
-/********************/
-/*
-void CTraderSpi::ReqExecOrderAction(CThostFtdcExecOrderField *pExecOrder)
-{
-	static bool EXECORDER_ACTION_SENT = false;		
-	if (EXECORDER_ACTION_SENT)
-		return;
-
-	CThostFtdcInputExecOrderActionField req;
-	memset(&req, 0, sizeof(req));
-
-	strcpy(req.BrokerID,pExecOrder->BrokerID);
-
-	strcpy(req.InvestorID,pExecOrder->InvestorID);
-
-	//TThostFtdcOrderActionRefType	ExecOrderActionRef;
-
-	strcpy(req.ExecOrderRef,pExecOrder->ExecOrderRef);
-
-	//TThostFtdcRequestIDType	RequestID;
-
-	req.FrontID=FRONT_ID;
-
-	req.SessionID=SESSION_ID;
-
-	//TThostFtdcExchangeIDType	ExchangeID;
-
-	//TThostFtdcExecOrderSysIDType	ExecOrderSysID;
-
-	req.ActionFlag=THOST_FTDC_AF_Delete;
-
-	//TThostFtdcUserIDType	UserID;
-
-	strcpy(req.InstrumentID,pExecOrder->InstrumentID);
-
-	int iResult = pUserApi->ReqExecOrderAction(&req, ++iRequestID);
-
-	EXECORDER_ACTION_SENT = true;
-}
-
-void CTraderSpi::ReqQuoteAction(CThostFtdcQuoteField *pQuote)
-{
-	static bool QUOTE_ACTION_SENT = false;		
-	if (QUOTE_ACTION_SENT)
-		return;
-
-	CThostFtdcInputQuoteActionField req;
-	memset(&req, 0, sizeof(req));
-
-	strcpy(req.BrokerID, pQuote->BrokerID);
-
-	strcpy(req.InvestorID, pQuote->InvestorID);
-
-	//TThostFtdcOrderActionRefType	QuoteActionRef;
-
-	strcpy(req.QuoteRef,pQuote->QuoteRef);
-
-	//TThostFtdcRequestIDType	RequestID;
-
-	req.FrontID=FRONT_ID;
-
-	req.SessionID=SESSION_ID;
-
-	//TThostFtdcExchangeIDType	ExchangeID;
-
-	//TThostFtdcOrderSysIDType	QuoteSysID;
-
-	req.ActionFlag=THOST_FTDC_AF_Delete;
-
-	//TThostFtdcUserIDType	UserID;
-
-	strcpy(req.InstrumentID,pQuote->InstrumentID);
-
-	int iResult = pUserApi->ReqQuoteAction(&req, ++iRequestID);
-
-	QUOTE_ACTION_SENT = true;
-}
-
-void CTraderSpi::OnRspExecOrderAction(CThostFtdcInputExecOrderActionField *pInpuExectOrderAction, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
-{
-	cout << "--->>> " << "OnRspExecOrderAction" << endl;
-	IsErrorRspInfo(pRspInfo);
-}
-
-void CTraderSpi::OnRspQuoteAction(CThostFtdcInputQuoteActionField *pInpuQuoteAction, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
-{
-	cout << "--->>> " << "OnRspQuoteAction" << endl;
-	IsErrorRspInfo(pRspInfo);
-}
-*/
 void CTraderSpi::OnRtnOrder(CThostFtdcOrderField *pOrder)
 {
 	cout << "--->>> Receive order response"  << endl;
 	if (IsMyOrder(pOrder))
 	{
-		cout << "direction: " << pOrder->Direction << endl;
-		if (IsTradingOrder(pOrder))
-		{
-			//ReqOrderAction(pOrder);
-			cout << "--->>> Waiting for trading" << endl;
+		cout << "InstruentID: " << pOrder->InstrumentID << endl;
+		cout << "OrderSysID: " << pOrder->OrderSysID << endl;
+		cout << "OrderStatus: " << pOrder->OrderStatus << endl << endl;
+		if(pOrder->OrderStatus == THOST_FTDC_OST_Canceled){
+			cout << "--->>> Revoke order succeed" << endl << endl;
 		}
-		else if (pOrder->OrderStatus == THOST_FTDC_OST_Canceled)
-			cout << "--->>> Revoke order succeed" << endl;
+		if(pOrder->OrderSysID){
+			char filePath[100] = {'\0'};
+			sprintf(filePath, "%s_order.csv", pOrder->InvestorID);
+			ofstream outFile;
+			outFile.open(filePath, ios::app);
+			outFile << pOrder->OrderSysID << ","
+					<< pOrder->InstrumentID << ","
+					<< pOrder->LimitPrice << ","
+					<< pOrder->VolumeTotalOriginal << ","
+					<< pOrder->OrderStatus << endl;
+		}
 	}
-}
-/*
-void CTraderSpi::OnRtnExecOrder(CThostFtdcExecOrderField *pExecOrder)
-{
-	cout << "--->>> " << "OnRtnExecOrder"  << endl;
-	if (IsMyExecOrder(pExecOrder))
-	{
-		if (IsTradingExecOrder(pExecOrder))
-			ReqExecOrderAction(pExecOrder);
-		else if (pExecOrder->ExecResult == THOST_FTDC_OER_Canceled)
-			cout << "Revoke order succeed" << endl;
+	else {
+		cout << endl;
 	}
 }
 
-void CTraderSpi::OnRtnForQuoteRsp(CThostFtdcForQuoteRspField *pForQuoteRsp)
-{
-	cout << "--->>> " << "OnRtnForQuoteRsp"  << endl;
-}
-
-void CTraderSpi::OnRtnQuote(CThostFtdcQuoteField *pQuote)
-{
-	cout << "--->>> " << "OnRtnQuote"  << endl;
-	if (IsMyQuote(pQuote))
-	{
-		if (IsTradingQuote(pQuote))
-			ReqQuoteAction(pQuote);
-		else if (pQuote->QuoteStatus == THOST_FTDC_OST_Canceled)
-			cout << "papapa" << endl;
-	}
-}
-*/
 void CTraderSpi::OnRtnTrade(CThostFtdcTradeField *pTrade)
 {
 	cout << "--->>> Trade succeed" << endl;
@@ -622,7 +387,11 @@ void CTraderSpi::OnRtnTrade(CThostFtdcTradeField *pTrade)
 	cout << "InstrumentID: " << pTrade->InstrumentID << endl;
 	cout << "Price: " << pTrade->Price << endl;
 	cout << "Volume: " << pTrade->Volume << endl;
+	cout << "OffsetFlag: " << pTrade->OffsetFlag << endl;
+	cout << "HedgeFlag: " << pTrade->HedgeFlag << endl;
 	cout << "Direction: " << pTrade->Direction << endl;
+	cout << "TradeType: " << pTrade->TradeType << endl;
+	cout << "SettlementID: " << pTrade->SettlementID << endl << endl;
 }
 
 void CTraderSpi:: OnFrontDisconnected(int nReason)
@@ -657,35 +426,116 @@ bool CTraderSpi::IsMyOrder(CThostFtdcOrderField *pOrder)
 			(pOrder->SessionID == SESSION_ID) &&
 			(strcmp(pOrder->OrderRef, ORDER_REF) == 0));
 }
-/*
-bool CTraderSpi::IsMyExecOrder(CThostFtdcExecOrderField *pExecOrder)
-{
-	return ((pExecOrder->FrontID == FRONT_ID) &&
-		(pExecOrder->SessionID == SESSION_ID) &&
-		(strcmp(pExecOrder->ExecOrderRef, EXECORDER_REF) == 0));
-}
 
-bool CTraderSpi::IsMyQuote(CThostFtdcQuoteField *pQuote)
-{
-	return ((pQuote->FrontID == FRONT_ID) &&
-		(pQuote->SessionID == SESSION_ID) &&
-		(strcmp(pQuote->QuoteRef, QUOTE_REF) == 0));
-}
-*/
 bool CTraderSpi::IsTradingOrder(CThostFtdcOrderField *pOrder)
 {
 	return ((pOrder->OrderStatus != THOST_FTDC_OST_PartTradedNotQueueing) &&
 			(pOrder->OrderStatus != THOST_FTDC_OST_Canceled) &&
 			(pOrder->OrderStatus != THOST_FTDC_OST_AllTraded));
 }
-/*
-bool CTraderSpi::IsTradingExecOrder(CThostFtdcExecOrderField *pExecOrder)
+
+
+void CTraderSpi::ReqQryOrder(char *instrumentId, char *orderSysId)
 {
-	return (pExecOrder->ExecResult != THOST_FTDC_OER_Canceled);
+	CThostFtdcQryOrderField req;
+	memset(&req, 0, sizeof(req));
+	strcpy(req.BrokerID, BROKER_ID);
+	strcpy(req.InvestorID, INVESTOR_ID);
+	strcpy(req.InstrumentID, instrumentId);
+	strcpy(req.OrderSysID, orderSysId);
+	
+	while (true)
+	{
+		int iResult = pUserApi->ReqQryOrder(&req, ++iRequestID);
+		if (!IsFlowControl(iResult)){
+			//cout << "Query instrument "  << ((iResult == 0) ? "succeed" : "default") << endl;
+			break;
+		}
+		else{
+			cout << "--->>> Query instrument iResult: " << iResult << endl;
+			usleep(10000);
+		}
+	} // while
 }
 
-bool CTraderSpi::IsTradingQuote(CThostFtdcQuoteField *pQuote)
+void CTraderSpi::OnRspQryOrder(CThostFtdcOrderField *pOrder, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
-	return (pQuote->QuoteStatus != THOST_FTDC_OST_Canceled);
+	if (bIsLast && !IsErrorRspInfo(pRspInfo))
+	{
+		cout << "--->>> Query order succeed" << endl;
+		cout << "InstrumentID: " << pOrder->InstrumentID << endl;
+		cout << "LimitPrice: " << pOrder->LimitPrice << endl;
+		cout << "OrderStatus: " << pOrder->OrderStatus << endl << endl;
+		
+		ReqOrderAction(pOrder);
+	}
+	else
+	{
+		cout << "--->>> Query order default" << endl;
+	}
 }
-*/
+
+void CTraderSpi::SetOrderType()
+{
+	CIni ini;
+	ini.OpenFile(OrderFilePath,"r");
+
+	memset(&InsertOrder, 0, sizeof(InsertOrder));
+
+	int OrderType = ini.GetInt("OrderType", "ot");
+
+	strcpy(InsertOrder.BrokerID, BROKER_ID);
+
+	strcpy(InsertOrder.InvestorID, INVESTOR_ID);
+
+	strcpy(InsertOrder.OrderRef, ORDER_REF);
+
+//	TThostFtdcUserIDType	UserID;
+
+	switch(OrderType){
+		case 1:
+			InsertOrder.OrderPriceType = THOST_FTDC_OPT_LimitPrice;
+			InsertOrder.TimeCondition = THOST_FTDC_TC_GFD;
+			InsertOrder.VolumeCondition = THOST_FTDC_VC_AV;
+			InsertOrder.ContingentCondition = THOST_FTDC_CC_Immediately;
+			break;
+		case 2:
+			InsertOrder.OrderPriceType = THOST_FTDC_OPT_AnyPrice;
+			InsertOrder.TimeCondition = THOST_FTDC_TC_IOC;
+			InsertOrder.VolumeCondition = THOST_FTDC_VC_AV;
+			InsertOrder.ContingentCondition = THOST_FTDC_CC_Immediately;
+			break;
+		case 3:
+			InsertOrder.OrderPriceType = THOST_FTDC_OPT_LimitPrice;
+			InsertOrder.TimeCondition = THOST_FTDC_TC_IOC;
+			InsertOrder.VolumeCondition = THOST_FTDC_VC_CV;
+			InsertOrder.ContingentCondition = THOST_FTDC_CC_Immediately;
+			break;
+		case 4:
+			InsertOrder.OrderPriceType = THOST_FTDC_OPT_LimitPrice;
+			InsertOrder.TimeCondition = THOST_FTDC_TC_IOC;
+			InsertOrder.VolumeCondition = THOST_FTDC_VC_CV;
+			InsertOrder.ContingentCondition = THOST_FTDC_CC_Immediately;
+			break;
+		default:
+			cout << "this type can not be identified" << endl;
+			break;
+	}
+
+	strcpy(InsertOrder.InstrumentID, ini.GetStr("Instrument" ,"ins"));
+	InsertOrder.Direction = ini.GetStr("Direction", "dir")[0];
+	InsertOrder.CombOffsetFlag[0] = ini.GetStr("CombOffsetFlag", "cof")[0];
+	InsertOrder.CombHedgeFlag[0] = ini.GetStr("CombHedgeFlag", "chf")[0];
+	InsertOrder.LimitPrice = (double)ini.GetInt("LimitPrice", "pri");
+	InsertOrder.VolumeTotalOriginal = ini.GetInt("VolumeTotalOriginal", "vto");
+	InsertOrder.MinVolume = ini.GetInt("MinVolume", "mv");
+	InsertOrder.ForceCloseReason = ini.GetStr("ForceCloseReason", "fcr")[0];
+	InsertOrder.IsAutoSuspend = ini.GetInt("IsAutoSuspend", "ias");
+	InsertOrder.UserForceClose = ini.GetInt("UserForceClose", "ufc");
+
+//	req.TimeCondition = THOST_FTDC_TC_GFD;
+
+//	TThostFtdcDateType	GTDDate;
+
+//	TThostFtdcPriceType	StopPrice;
+}
