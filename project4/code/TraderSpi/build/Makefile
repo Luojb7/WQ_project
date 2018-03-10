@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named TraderSpi
+# Target rules for targets named CTraderSpi
 
 # Build rule for target.
-TraderSpi: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 TraderSpi
-.PHONY : TraderSpi
+CTraderSpi: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 CTraderSpi
+.PHONY : CTraderSpi
 
 # fast build rule for target.
-TraderSpi/fast:
-	$(MAKE) -f src/CMakeFiles/TraderSpi.dir/build.make src/CMakeFiles/TraderSpi.dir/build
-.PHONY : TraderSpi/fast
+CTraderSpi/fast:
+	$(MAKE) -f src/CMakeFiles/CTraderSpi.dir/build.make src/CMakeFiles/CTraderSpi.dir/build
+.PHONY : CTraderSpi/fast
 
 #=============================================================================
 # Target rules for targets named Ini
@@ -137,17 +137,17 @@ Ini/fast:
 .PHONY : Ini/fast
 
 #=============================================================================
-# Target rules for targets named testTraderSpi
+# Target rules for targets named TraderServer
 
 # Build rule for target.
-testTraderSpi: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 testTraderSpi
-.PHONY : testTraderSpi
+TraderServer: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 TraderServer
+.PHONY : TraderServer
 
 # fast build rule for target.
-testTraderSpi/fast:
-	$(MAKE) -f src/CMakeFiles/testTraderSpi.dir/build.make src/CMakeFiles/testTraderSpi.dir/build
-.PHONY : testTraderSpi/fast
+TraderServer/fast:
+	$(MAKE) -f src/CMakeFiles/TraderServer.dir/build.make src/CMakeFiles/TraderServer.dir/build
+.PHONY : TraderServer/fast
 
 # Help Target
 help:
@@ -157,9 +157,9 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... TraderSpi"
+	@echo "... CTraderSpi"
 	@echo "... Ini"
-	@echo "... testTraderSpi"
+	@echo "... TraderServer"
 .PHONY : help
 
 

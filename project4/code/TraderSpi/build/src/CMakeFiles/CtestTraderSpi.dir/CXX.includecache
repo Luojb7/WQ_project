@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+../inc/CTraderSpi.h
+ThostFtdcTraderApi.h
+../inc/ThostFtdcTraderApi.h
+stdio.h
+-
+fstream
+-
+cstring
+-
+
 ../inc/Ini.h
 map
 -
@@ -28,19 +38,11 @@ ThostFtdcUserApiStruct.h
 ThostFtdcUserApiDataType.h
 ../inc/ThostFtdcUserApiDataType.h
 
-../inc/TraderSpi.h
-ThostFtdcTraderApi.h
-../inc/ThostFtdcTraderApi.h
-stdio.h
--
-fstream
--
-
-/home/luojunbin/project/WQ_project/project4/code/TraderSpi/src/testTraderSpi.cpp
+/home/luojunbin/project/WQ_project/project4/code/TraderSpi/src/CtestTraderSpi.cpp
 ThostFtdcTraderApi.h
 /home/luojunbin/project/WQ_project/project4/code/TraderSpi/src/ThostFtdcTraderApi.h
-TraderSpi.h
-/home/luojunbin/project/WQ_project/project4/code/TraderSpi/src/TraderSpi.h
+CTraderSpi.h
+/home/luojunbin/project/WQ_project/project4/code/TraderSpi/src/CTraderSpi.h
 unistd.h
 -
 iostream

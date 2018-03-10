@@ -1,7 +1,7 @@
 /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/CMakeFiles/edit_cache.dir
 /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/CMakeFiles/rebuild_cache.dir
 /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/src/CMakeFiles/edit_cache.dir
-/home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/src/CMakeFiles/TraderSpi.dir
+/home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/src/CMakeFiles/CTraderSpi.dir
 /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/src/CMakeFiles/Ini.dir
-/home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/src/CMakeFiles/testTraderSpi.dir
+/home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/src/CMakeFiles/TraderServer.dir
 /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/src/CMakeFiles/rebuild_cache.dir

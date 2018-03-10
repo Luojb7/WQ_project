@@ -111,19 +111,19 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-src/CMakeFiles/TraderSpi.dir/rule:
-	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/TraderSpi.dir/rule
-.PHONY : src/CMakeFiles/TraderSpi.dir/rule
+src/CMakeFiles/CTraderSpi.dir/rule:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/CTraderSpi.dir/rule
+.PHONY : src/CMakeFiles/CTraderSpi.dir/rule
 
 # Convenience name for target.
-TraderSpi: src/CMakeFiles/TraderSpi.dir/rule
+CTraderSpi: src/CMakeFiles/CTraderSpi.dir/rule
 
-.PHONY : TraderSpi
+.PHONY : CTraderSpi
 
 # fast build rule for target.
-TraderSpi/fast:
-	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/TraderSpi.dir/build.make src/CMakeFiles/TraderSpi.dir/build
-.PHONY : TraderSpi/fast
+CTraderSpi/fast:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/CTraderSpi.dir/build.make src/CMakeFiles/CTraderSpi.dir/build
+.PHONY : CTraderSpi/fast
 
 # Convenience name for target.
 src/CMakeFiles/Ini.dir/rule:
@@ -141,19 +141,46 @@ Ini/fast:
 .PHONY : Ini/fast
 
 # Convenience name for target.
-src/CMakeFiles/testTraderSpi.dir/rule:
-	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/testTraderSpi.dir/rule
-.PHONY : src/CMakeFiles/testTraderSpi.dir/rule
+src/CMakeFiles/TraderServer.dir/rule:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/TraderServer.dir/rule
+.PHONY : src/CMakeFiles/TraderServer.dir/rule
 
 # Convenience name for target.
-testTraderSpi: src/CMakeFiles/testTraderSpi.dir/rule
+TraderServer: src/CMakeFiles/TraderServer.dir/rule
 
-.PHONY : testTraderSpi
+.PHONY : TraderServer
 
 # fast build rule for target.
-testTraderSpi/fast:
-	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/testTraderSpi.dir/build.make src/CMakeFiles/testTraderSpi.dir/build
-.PHONY : testTraderSpi/fast
+TraderServer/fast:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/TraderServer.dir/build.make src/CMakeFiles/TraderServer.dir/build
+.PHONY : TraderServer/fast
+
+CTraderSpi.o: CTraderSpi.cpp.o
+
+.PHONY : CTraderSpi.o
+
+# target to build an object file
+CTraderSpi.cpp.o:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/CTraderSpi.dir/build.make src/CMakeFiles/CTraderSpi.dir/CTraderSpi.cpp.o
+.PHONY : CTraderSpi.cpp.o
+
+CTraderSpi.i: CTraderSpi.cpp.i
+
+.PHONY : CTraderSpi.i
+
+# target to preprocess a source file
+CTraderSpi.cpp.i:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/CTraderSpi.dir/build.make src/CMakeFiles/CTraderSpi.dir/CTraderSpi.cpp.i
+.PHONY : CTraderSpi.cpp.i
+
+CTraderSpi.s: CTraderSpi.cpp.s
+
+.PHONY : CTraderSpi.s
+
+# target to generate assembly for a file
+CTraderSpi.cpp.s:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/CTraderSpi.dir/build.make src/CMakeFiles/CTraderSpi.dir/CTraderSpi.cpp.s
+.PHONY : CTraderSpi.cpp.s
 
 Ini.o: Ini.cpp.o
 
@@ -182,59 +209,32 @@ Ini.cpp.s:
 	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/Ini.dir/build.make src/CMakeFiles/Ini.dir/Ini.cpp.s
 .PHONY : Ini.cpp.s
 
-TraderSpi.o: TraderSpi.cpp.o
+TraderServer.o: TraderServer.cpp.o
 
-.PHONY : TraderSpi.o
-
-# target to build an object file
-TraderSpi.cpp.o:
-	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/TraderSpi.dir/build.make src/CMakeFiles/TraderSpi.dir/TraderSpi.cpp.o
-.PHONY : TraderSpi.cpp.o
-
-TraderSpi.i: TraderSpi.cpp.i
-
-.PHONY : TraderSpi.i
-
-# target to preprocess a source file
-TraderSpi.cpp.i:
-	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/TraderSpi.dir/build.make src/CMakeFiles/TraderSpi.dir/TraderSpi.cpp.i
-.PHONY : TraderSpi.cpp.i
-
-TraderSpi.s: TraderSpi.cpp.s
-
-.PHONY : TraderSpi.s
-
-# target to generate assembly for a file
-TraderSpi.cpp.s:
-	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/TraderSpi.dir/build.make src/CMakeFiles/TraderSpi.dir/TraderSpi.cpp.s
-.PHONY : TraderSpi.cpp.s
-
-testTraderSpi.o: testTraderSpi.cpp.o
-
-.PHONY : testTraderSpi.o
+.PHONY : TraderServer.o
 
 # target to build an object file
-testTraderSpi.cpp.o:
-	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/testTraderSpi.dir/build.make src/CMakeFiles/testTraderSpi.dir/testTraderSpi.cpp.o
-.PHONY : testTraderSpi.cpp.o
+TraderServer.cpp.o:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/TraderServer.dir/build.make src/CMakeFiles/TraderServer.dir/TraderServer.cpp.o
+.PHONY : TraderServer.cpp.o
 
-testTraderSpi.i: testTraderSpi.cpp.i
+TraderServer.i: TraderServer.cpp.i
 
-.PHONY : testTraderSpi.i
+.PHONY : TraderServer.i
 
 # target to preprocess a source file
-testTraderSpi.cpp.i:
-	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/testTraderSpi.dir/build.make src/CMakeFiles/testTraderSpi.dir/testTraderSpi.cpp.i
-.PHONY : testTraderSpi.cpp.i
+TraderServer.cpp.i:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/TraderServer.dir/build.make src/CMakeFiles/TraderServer.dir/TraderServer.cpp.i
+.PHONY : TraderServer.cpp.i
 
-testTraderSpi.s: testTraderSpi.cpp.s
+TraderServer.s: TraderServer.cpp.s
 
-.PHONY : testTraderSpi.s
+.PHONY : TraderServer.s
 
 # target to generate assembly for a file
-testTraderSpi.cpp.s:
-	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/testTraderSpi.dir/build.make src/CMakeFiles/testTraderSpi.dir/testTraderSpi.cpp.s
-.PHONY : testTraderSpi.cpp.s
+TraderServer.cpp.s:
+	cd /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build && $(MAKE) -f src/CMakeFiles/TraderServer.dir/build.make src/CMakeFiles/TraderServer.dir/TraderServer.cpp.s
+.PHONY : TraderServer.cpp.s
 
 # Help Target
 help:
@@ -243,19 +243,19 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... TraderSpi"
+	@echo "... CTraderSpi"
 	@echo "... Ini"
-	@echo "... testTraderSpi"
+	@echo "... TraderServer"
 	@echo "... rebuild_cache"
+	@echo "... CTraderSpi.o"
+	@echo "... CTraderSpi.i"
+	@echo "... CTraderSpi.s"
 	@echo "... Ini.o"
 	@echo "... Ini.i"
 	@echo "... Ini.s"
-	@echo "... TraderSpi.o"
-	@echo "... TraderSpi.i"
-	@echo "... TraderSpi.s"
-	@echo "... testTraderSpi.o"
-	@echo "... testTraderSpi.i"
-	@echo "... testTraderSpi.s"
+	@echo "... TraderServer.o"
+	@echo "... TraderServer.i"
+	@echo "... TraderServer.s"
 .PHONY : help
 
 

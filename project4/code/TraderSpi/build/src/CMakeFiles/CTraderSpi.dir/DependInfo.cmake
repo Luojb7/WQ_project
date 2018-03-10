@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/luojunbin/project/WQ_project/project4/code/TraderSpi/src/TraderSpi.cpp" "/home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/src/CMakeFiles/TraderSpi.dir/TraderSpi.cpp.o"
+  "/home/luojunbin/project/WQ_project/project4/code/TraderSpi/src/CTraderSpi.cpp" "/home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/src/CMakeFiles/CTraderSpi.dir/CTraderSpi.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

@@ -1,1 +1,0 @@
-/usr/bin/c++      CMakeFiles/testTraderSpi.dir/testTraderSpi.cpp.o  -o ../../bin/testTraderSpi  -L/home/luojunbin/project/WQ_project/project4/code/TraderSpi/lib -lthostmduserapi -lthosttraderapi ../../lib/libTraderSpi.a ../../lib/libIni.a -Wl,-rpath,/home/luojunbin/project/WQ_project/project4/code/TraderSpi/lib 

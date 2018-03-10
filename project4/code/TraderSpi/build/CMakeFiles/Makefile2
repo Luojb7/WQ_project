@@ -63,16 +63,16 @@ CMAKE_BINARY_DIR = /home/luojunbin/project/WQ_project/project4/code/TraderSpi/bu
 # Directory level rules for directory src
 
 # Convenience name for "all" pass in the directory.
-src/all: src/CMakeFiles/TraderSpi.dir/all
+src/all: src/CMakeFiles/CTraderSpi.dir/all
 src/all: src/CMakeFiles/Ini.dir/all
-src/all: src/CMakeFiles/testTraderSpi.dir/all
+src/all: src/CMakeFiles/TraderServer.dir/all
 
 .PHONY : src/all
 
 # Convenience name for "clean" pass in the directory.
-src/clean: src/CMakeFiles/TraderSpi.dir/clean
+src/clean: src/CMakeFiles/CTraderSpi.dir/clean
 src/clean: src/CMakeFiles/Ini.dir/clean
-src/clean: src/CMakeFiles/testTraderSpi.dir/clean
+src/clean: src/CMakeFiles/TraderServer.dir/clean
 
 .PHONY : src/clean
 
@@ -82,39 +82,39 @@ src/preinstall:
 .PHONY : src/preinstall
 
 #=============================================================================
-# Target rules for target src/CMakeFiles/TraderSpi.dir
+# Target rules for target src/CMakeFiles/CTraderSpi.dir
 
 # All Build rule for target.
-src/CMakeFiles/TraderSpi.dir/all:
-	$(MAKE) -f src/CMakeFiles/TraderSpi.dir/build.make src/CMakeFiles/TraderSpi.dir/depend
-	$(MAKE) -f src/CMakeFiles/TraderSpi.dir/build.make src/CMakeFiles/TraderSpi.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/CMakeFiles --progress-num=3,4 "Built target TraderSpi"
-.PHONY : src/CMakeFiles/TraderSpi.dir/all
+src/CMakeFiles/CTraderSpi.dir/all:
+	$(MAKE) -f src/CMakeFiles/CTraderSpi.dir/build.make src/CMakeFiles/CTraderSpi.dir/depend
+	$(MAKE) -f src/CMakeFiles/CTraderSpi.dir/build.make src/CMakeFiles/CTraderSpi.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/CMakeFiles --progress-num=1,2 "Built target CTraderSpi"
+.PHONY : src/CMakeFiles/CTraderSpi.dir/all
 
 # Include target in all.
-all: src/CMakeFiles/TraderSpi.dir/all
+all: src/CMakeFiles/CTraderSpi.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-src/CMakeFiles/TraderSpi.dir/rule: cmake_check_build_system
+src/CMakeFiles/CTraderSpi.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/TraderSpi.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/CTraderSpi.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/CMakeFiles 0
-.PHONY : src/CMakeFiles/TraderSpi.dir/rule
+.PHONY : src/CMakeFiles/CTraderSpi.dir/rule
 
 # Convenience name for target.
-TraderSpi: src/CMakeFiles/TraderSpi.dir/rule
+CTraderSpi: src/CMakeFiles/CTraderSpi.dir/rule
 
-.PHONY : TraderSpi
-
-# clean rule for target.
-src/CMakeFiles/TraderSpi.dir/clean:
-	$(MAKE) -f src/CMakeFiles/TraderSpi.dir/build.make src/CMakeFiles/TraderSpi.dir/clean
-.PHONY : src/CMakeFiles/TraderSpi.dir/clean
+.PHONY : CTraderSpi
 
 # clean rule for target.
-clean: src/CMakeFiles/TraderSpi.dir/clean
+src/CMakeFiles/CTraderSpi.dir/clean:
+	$(MAKE) -f src/CMakeFiles/CTraderSpi.dir/build.make src/CMakeFiles/CTraderSpi.dir/clean
+.PHONY : src/CMakeFiles/CTraderSpi.dir/clean
+
+# clean rule for target.
+clean: src/CMakeFiles/CTraderSpi.dir/clean
 
 .PHONY : clean
 
@@ -125,7 +125,7 @@ clean: src/CMakeFiles/TraderSpi.dir/clean
 src/CMakeFiles/Ini.dir/all:
 	$(MAKE) -f src/CMakeFiles/Ini.dir/build.make src/CMakeFiles/Ini.dir/depend
 	$(MAKE) -f src/CMakeFiles/Ini.dir/build.make src/CMakeFiles/Ini.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/CMakeFiles --progress-num=1,2 "Built target Ini"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/CMakeFiles --progress-num=3,4 "Built target Ini"
 .PHONY : src/CMakeFiles/Ini.dir/all
 
 # Include target in all.
@@ -156,40 +156,40 @@ clean: src/CMakeFiles/Ini.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target src/CMakeFiles/testTraderSpi.dir
+# Target rules for target src/CMakeFiles/TraderServer.dir
 
 # All Build rule for target.
-src/CMakeFiles/testTraderSpi.dir/all: src/CMakeFiles/TraderSpi.dir/all
-src/CMakeFiles/testTraderSpi.dir/all: src/CMakeFiles/Ini.dir/all
-	$(MAKE) -f src/CMakeFiles/testTraderSpi.dir/build.make src/CMakeFiles/testTraderSpi.dir/depend
-	$(MAKE) -f src/CMakeFiles/testTraderSpi.dir/build.make src/CMakeFiles/testTraderSpi.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/CMakeFiles --progress-num=5,6 "Built target testTraderSpi"
-.PHONY : src/CMakeFiles/testTraderSpi.dir/all
+src/CMakeFiles/TraderServer.dir/all: src/CMakeFiles/CTraderSpi.dir/all
+src/CMakeFiles/TraderServer.dir/all: src/CMakeFiles/Ini.dir/all
+	$(MAKE) -f src/CMakeFiles/TraderServer.dir/build.make src/CMakeFiles/TraderServer.dir/depend
+	$(MAKE) -f src/CMakeFiles/TraderServer.dir/build.make src/CMakeFiles/TraderServer.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/CMakeFiles --progress-num=5,6 "Built target TraderServer"
+.PHONY : src/CMakeFiles/TraderServer.dir/all
 
 # Include target in all.
-all: src/CMakeFiles/testTraderSpi.dir/all
+all: src/CMakeFiles/TraderServer.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-src/CMakeFiles/testTraderSpi.dir/rule: cmake_check_build_system
+src/CMakeFiles/TraderServer.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/CMakeFiles 6
-	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/testTraderSpi.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/TraderServer.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/luojunbin/project/WQ_project/project4/code/TraderSpi/build/CMakeFiles 0
-.PHONY : src/CMakeFiles/testTraderSpi.dir/rule
+.PHONY : src/CMakeFiles/TraderServer.dir/rule
 
 # Convenience name for target.
-testTraderSpi: src/CMakeFiles/testTraderSpi.dir/rule
+TraderServer: src/CMakeFiles/TraderServer.dir/rule
 
-.PHONY : testTraderSpi
-
-# clean rule for target.
-src/CMakeFiles/testTraderSpi.dir/clean:
-	$(MAKE) -f src/CMakeFiles/testTraderSpi.dir/build.make src/CMakeFiles/testTraderSpi.dir/clean
-.PHONY : src/CMakeFiles/testTraderSpi.dir/clean
+.PHONY : TraderServer
 
 # clean rule for target.
-clean: src/CMakeFiles/testTraderSpi.dir/clean
+src/CMakeFiles/TraderServer.dir/clean:
+	$(MAKE) -f src/CMakeFiles/TraderServer.dir/build.make src/CMakeFiles/TraderServer.dir/clean
+.PHONY : src/CMakeFiles/TraderServer.dir/clean
+
+# clean rule for target.
+clean: src/CMakeFiles/TraderServer.dir/clean
 
 .PHONY : clean
 

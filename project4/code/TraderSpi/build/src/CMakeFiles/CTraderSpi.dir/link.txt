@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../../lib/libCTraderSpi.a  CMakeFiles/CTraderSpi.dir/CTraderSpi.cpp.o
+/usr/bin/ranlib ../../lib/libCTraderSpi.a

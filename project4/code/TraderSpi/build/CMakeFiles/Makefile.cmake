@@ -43,7 +43,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "src/CMakeFiles/TraderSpi.dir/DependInfo.cmake"
+  "src/CMakeFiles/CTraderSpi.dir/DependInfo.cmake"
   "src/CMakeFiles/Ini.dir/DependInfo.cmake"
-  "src/CMakeFiles/testTraderSpi.dir/DependInfo.cmake"
+  "src/CMakeFiles/TraderServer.dir/DependInfo.cmake"
   )

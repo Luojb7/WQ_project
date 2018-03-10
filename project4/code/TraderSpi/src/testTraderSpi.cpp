@@ -10,11 +10,11 @@ using namespace std;
 
 CThostFtdcTraderApi* pUserApi;
 
-char  FRONT_ADDR[] = "tcp://180.168.146.187:10030";		
-TThostFtdcBrokerIDType	BROKER_ID = "9999";				
-TThostFtdcInvestorIDType INVESTOR_ID = "112585";			
-TThostFtdcPasswordType  PASSWORD = "qq824073152";			
-TThostFtdcInstrumentIDType INSTRUMENT_ID = "al1803";	
+char  FRONT_ADDR[] = "tcp://180.168.146.187:10000";		
+TThostFtdcBrokerIDType	BROKER_ID;				
+TThostFtdcInvestorIDType INVESTOR_ID;			
+TThostFtdcPasswordType  PASSWORD;			
+TThostFtdcInstrumentIDType INSTRUMENT_ID;	
 
 int LoginFlag = 0;
 int iRequestID = 0;
@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
 			string orderTemp;
 			getline(cin,orderTemp);
 			while(orderTemp.size() < 12) { orderTemp = ' ' + orderTemp; }
-			pUserSpi->ReqQryOrder((char*)instrumentTemp.c_str(), (char*)orderTemp.c_str());
+			pUserSpi->ReqQryOrder((char*)orderTemp.c_str());
 		}
 		else if(strcmp(order, "logout") == 0){
 			LoginFlag = 0;

@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11 -std=c++11   CMakeFiles/TraderServer.dir/TraderServer.cpp.o  -o ../../bin/TraderServer  -L/home/luojunbin/project/WQ_project/project4/code/TraderSpi/lib -lthosttraderapi ../../lib/libCTraderSpi.a ../../lib/libIni.a -Wl,-rpath,/home/luojunbin/project/WQ_project/project4/code/TraderSpi/lib 

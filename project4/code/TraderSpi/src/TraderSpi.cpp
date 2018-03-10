@@ -273,6 +273,10 @@ void CTraderSpi::OnRspQryInvestorPosition(CThostFtdcInvestorPositionField *pInve
 // request for inserting order
 void CTraderSpi::ReqOrderInsert()
 {
+	int iNextOrderRef = atoi(ORDER_REF);
+	iNextOrderRef++;
+	sprintf(ORDER_REF, "%d", iNextOrderRef);
+
 	SetOrderType();
 
 	int iResult = pUserApi->ReqOrderInsert(&InsertOrder, ++iRequestID);
@@ -296,9 +300,6 @@ void CTraderSpi::OnRspOrderInsert(CThostFtdcInputOrderField *pInputOrder, CThost
 
 void CTraderSpi::ReqOrderAction(CThostFtdcOrderField *pOrder)
 {
-	static bool ORDER_ACTION_SENT = false;		
-	if (ORDER_ACTION_SENT)
-		return;
 
 	CThostFtdcInputOrderActionField req;
 	memset(&req, 0, sizeof(req));
@@ -334,8 +335,8 @@ void CTraderSpi::ReqOrderAction(CThostFtdcOrderField *pOrder)
 	strcpy(req.InstrumentID, pOrder->InstrumentID);
 
 	int iResult = pUserApi->ReqOrderAction(&req, ++iRequestID);
+	//cout << iResult << endl;
 
-	ORDER_ACTION_SENT = true;
 }
 
 void CTraderSpi::OnRspOrderAction(CThostFtdcInputOrderActionField *pInputOrderAction, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
@@ -423,8 +424,7 @@ bool CTraderSpi::IsErrorRspInfo(CThostFtdcRspInfoField *pRspInfo)
 bool CTraderSpi::IsMyOrder(CThostFtdcOrderField *pOrder)
 {
 	return ((pOrder->FrontID == FRONT_ID) &&
-			(pOrder->SessionID == SESSION_ID) &&
-			(strcmp(pOrder->OrderRef, ORDER_REF) == 0));
+			(pOrder->SessionID == SESSION_ID));
 }
 
 bool CTraderSpi::IsTradingOrder(CThostFtdcOrderField *pOrder)
@@ -435,13 +435,12 @@ bool CTraderSpi::IsTradingOrder(CThostFtdcOrderField *pOrder)
 }
 
 
-void CTraderSpi::ReqQryOrder(char *instrumentId, char *orderSysId)
+void CTraderSpi::ReqQryOrder(char *orderSysId)
 {
 	CThostFtdcQryOrderField req;
 	memset(&req, 0, sizeof(req));
 	strcpy(req.BrokerID, BROKER_ID);
 	strcpy(req.InvestorID, INVESTOR_ID);
-	strcpy(req.InstrumentID, instrumentId);
 	strcpy(req.OrderSysID, orderSysId);
 	
 	while (true)

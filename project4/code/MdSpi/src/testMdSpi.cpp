@@ -11,11 +11,11 @@ using namespace std;
 
 CThostFtdcMdApi* pUserApi;
 
-char FRONT_ADDR[] = "tcp://180.168.146.187:10031";	
+char FRONT_ADDR[] = "tcp://180.168.146.187:10010";	
 TThostFtdcBrokerIDType	BROKER_ID ;				
 TThostFtdcInvestorIDType INVESTOR_ID ;
 TThostFtdcPasswordType  PASSWORD ;			
-char *ppInstrumentID[10];
+char *ppInstrumentID[100];
 int iInstrumentID = 0;								
 
 bool LoginFlag = 0;
@@ -97,6 +97,7 @@ int main(int argc, char* argv[])
 			cin >> iInstrumentID;
 			cout << "input the instrument list divided with ',': ";
 			cin >> insTmp;
+			cin.sync();
 			myInstrumentList.clear();
 			myInstrumentList = split(insTmp, pattern);
 			InstrumentCopy(myInstrumentList);
